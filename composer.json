@@ -1,0 +1,27 @@
+{
+    "name": "silex-spear/skeleton",
+    "type": "project",
+    "require-dev" : {
+        "phpunit/phpunit" : "~4.5"
+    },
+    "require" : {
+        "silex/silex" : "~1.2",
+        "niktux/karma" : "~5.3",
+        "puzzle/configuration" : "~1.7",
+        "symfony/console" : "~2.6",
+        "symfony/twig-bridge" : "~2.6",
+        "lebris/muffin" : "~1.2",
+        "silex-spear/application": "~1.0",
+        "silex-spear/assetic-provider" : "~1.0",
+        "silex-spear/dbal-provider" : "~2.0",
+        "silex-spear/twig-provider" : "~1.0",
+        "twbs/bootstrap" : "~3.3",
+        "oyejorge/less.php" : "~1.7",
+        "fortawesome/font-awesome": "~4.3"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Supermonitord\\" : "src"
+        }
+    }
+}
