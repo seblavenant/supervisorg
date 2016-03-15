@@ -18,6 +18,7 @@ class Application extends AbstractApplication
         $this->register(new Provider\DBAL());
         $this->register(new Provider\Twig());
         $this->register(new Provider\AsseticServiceProvider());
+        $this->register(new Services\Provider());
     }
 
     protected function initializeServices()

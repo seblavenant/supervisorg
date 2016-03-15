@@ -17,7 +17,8 @@
         "silex-spear/twig-provider" : "~1.0",
         "twbs/bootstrap" : "~3.3",
         "oyejorge/less.php" : "~1.7",
-        "fortawesome/font-awesome": "~4.3"
+        "fortawesome/font-awesome": "~4.3",
+        "zendframework/zend-xmlrpc": "^2.5"
     },
     "autoload" : {
         "psr-4" : {
