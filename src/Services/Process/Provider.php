@@ -1,6 +1,6 @@
 <?php
 
-namespace Supermonitord\Services;
+namespace Supermonitord\Services\Process;
 
 use Silex\ServiceProviderInterface;
 use Silex\Application;
@@ -9,8 +9,9 @@ class Provider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
-        $app->register(new Process\Provider());
-        $app->register(new XmlRPC\Provider());
+        $app['process.filter.name'] = $app->share(function($c) {
+            return new Filters\Name($c['configuration']->read('filter/process/names', []));
+        });
     }
 
     public function boot(Application $app)

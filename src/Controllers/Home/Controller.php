@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Supermonitord\Services\XmlRPC\Client;
+use Supermonitord\Services\Process\Filter;
 
 class Controller
 {
@@ -17,11 +18,13 @@ class Controller
         LoggerAwareTrait;
 
     private
+        $filter,
         $twig,
         $client;
 
-    public function __construct(\Twig_Environment $twig, Client $client)
+    public function __construct(\Twig_Environment $twig, Client $client, Filter $filter)
     {
+        $this->filter = $filter;
         $this->twig = $twig;
         $this->client = $client;
 
@@ -31,6 +34,8 @@ class Controller
     public function homeAction()
     {
         $processList = $this->client->getProcessList();
+
+        $processList = $this->filter->filter($processList);
 
         return $this->twig->render('home.html.twig', ['processList' => $processList]);
     }

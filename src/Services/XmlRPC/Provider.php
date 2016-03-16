@@ -10,7 +10,7 @@ class Provider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['xmlrpc.client'] = $app->share(function($c) {
-            return new Client($c['configuration']);
+            return new Clients\Zend($c['configuration']);
         });
     }
 
