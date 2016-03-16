@@ -1,4 +1,11 @@
-$('#process-search').on('keyup', function() {
+$searchInput = $('#process-search');
+
+Mousetrap.bind('f', function() {
+    $searchInput.focus();
+    return false;
+});
+
+$searchInput.on('keyup', function() {
     var searchedValue = $(this).val().toLowerCase();
 
     if(searchedValue == '')
