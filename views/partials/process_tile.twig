@@ -10,6 +10,11 @@
 
     <pre>{{ process.description }}</pre>
 
+    {% if process.statename in ['BACKOFF', 'FATAL'] %}
+        <em>STDERR</em>
+        <pre>{{ process.stderr }}</pre>
+    {% endif %}
+
     {% if process.statename == 'RUNNING' %}
         <a href="{{ path('process.stop', {process: process.name})}}" class="btn btn-danger">STOP PROCESS</a>
     {% elseif process.statename in ['STOPPED', 'FATAL'] %}

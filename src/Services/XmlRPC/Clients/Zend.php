@@ -30,6 +30,11 @@ class Zend implements Client
         return $this->client->call('supervisor.startProcess', [$process]);
     }
 
+    public function readStdErr($process)
+    {
+        return $this->client->call('supervisor.readProcessStderrLog', array($process, -1000, 0));
+    }
+
     /*
      * FIXME : TMP for dev
      */

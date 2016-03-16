@@ -8,6 +8,7 @@ use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Supermonitord\Services\XmlRPC\Client;
 use Supermonitord\Services\Process\Filter;
+use Supermonitord\Constants\ProcessState;
 
 class Controller
 {
@@ -36,6 +37,15 @@ class Controller
         $processList = $this->client->getProcessList();
 
         $processList = $this->filter->filter($processList);
+
+        // FIXME
+        foreach($processList as $index => $process)
+        {
+            if(in_array($process['statename'], [ ProcessState::BACKOFF, ProcessState::FATAL ]))
+            {
+                $processList[$index]['stderr'] = $this->client->readStdErr($process['name']);
+            }
+        }
 
         return $this->twig->render('home.html.twig', ['processList' => $processList]);
     }
