@@ -1,0 +1,19 @@
+<div class="col-md-3">
+    <h3>
+        <div>
+            {{ process.name }}
+            <div class="pull-right">
+                {% embed 'partials/process_state_label.twig' %}{% endembed %}
+            </div>
+        </div>
+    </h3>
+
+    <pre>{{ process.description }}</pre>
+
+    {% if process.statename == 'RUNNING' %}
+        <a href="{{ path('process.stop', {process: process.name})}}" class="btn btn-danger">STOP PROCESS</a>
+    {% elseif process.statename in ['STOPPED', 'FATAL'] %}
+        <a href="{{ path('process.start', {process: process.name})}}" class="btn btn-primary">RESTART</a>
+    {% endif %}
+
+</div>

@@ -1,34 +1,9 @@
 {% extends 'common/body.html.twig' %}
 
 {% block body %}
-<div class="row">
-{% for process in processList %}
-    <div class="col-md-3">
-        <h3>
-            <div>
-                {{ process.name }}
-                <div class="pull-right">
-                {% if process.statename == 'RUNNING' %}
-                    <span class="label label-success">{{ process.statename }}</span>
-                {% elseif process.statename in ['STOPPED', 'FATAL'] %}
-                    <span class="label label-danger">{{ process.statename }}</span>
-                {% else %}
-                    <span class="label label-default">{{ process.statename }}</span>
-                {% endif %}
-            </div>
-            </div>
-        </h3>
-
-        <pre>{{ process.description }}</pre>
-
-        {% if process.statename == 'RUNNING' %}
-            <a href="{{ path('process.stop', {process: process.name})}}" class="btn btn-danger">STOP PROCESS</a>
-        {% elseif process.statename in ['STOPPED', 'FATAL'] %}
-            <a href="{{ path('process.start', {process: process.name})}}" class="btn btn-primary">RESTART</a>
-        {% endif %}
-
-        {#<pre>{{ dump(process) }}</pre>#}
+    <div class="row">
+    {% for process in processList %}
+        {% embed 'partials/process_tile.twig' %}{% endembed %}
+    {% endfor %}
     </div>
-{% endfor %}
-</div>
 {% endblock %}
