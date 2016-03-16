@@ -2,6 +2,20 @@
 
 {% block body %}
     <div class="row">
+        <div class="col-md-12">
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="process-search" placeholder="Process">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="row">
     {% for process in processList %}
         {% embed 'partials/process_tile.twig' %}{% endembed %}
     {% endfor %}
@@ -13,6 +27,7 @@
 {% javascripts
     '../assets/js/jquery.countdown360.min.js'
     '../assets/js/timer.js'
+    '../assets/js/search.js'
 %}
 <script type="text/javascript" src="/{{ asset_url }}"></script>
 {% endjavascripts %}
