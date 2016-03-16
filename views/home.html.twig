@@ -7,3 +7,13 @@
     {% endfor %}
     </div>
 {% endblock %}
+
+
+{% block specificsJavascripts %}
+{% javascripts
+    '../assets/js/jquery.countdown360.min.js'
+    '../assets/js/timer.js'
+%}
+<script type="text/javascript" src="/{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock specificsJavascripts %}
