@@ -1,6 +1,6 @@
 <?php
 
-namespace Supermonitord\Services\XmlRPC;
+namespace Supervisorg\Services\XmlRPC;
 
 use Silex\ServiceProviderInterface;
 use Silex\Application;

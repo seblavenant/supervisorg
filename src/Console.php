@@ -1,6 +1,6 @@
 <?php
 
-namespace Supermonitord;
+namespace Supervisorg;
 
 use Puzzle\Configuration;
 use Spear\Silex\Provider\Commands\AsseticDumper;

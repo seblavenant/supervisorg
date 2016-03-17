@@ -7,8 +7,8 @@ $loader->addPsr4('Spear\\Silex\\Application\\', __DIR__ . '/../spear-application
 use Puzzle\Configuration\Yaml;
 use Gaufrette\Filesystem;
 use Gaufrette\Adapter\Local;
-use Supermonitord\Application;
-use Supermonitord\Console;
+use Supervisorg\Application;
+use Supervisorg\Console;
 
 $configurationFilesStorage = new Filesystem(new Local(__DIR__ . '/config'));
 $configuration = new Yaml($configurationFilesStorage);

@@ -1,8 +1,8 @@
 <?php
 
-namespace Supermonitord\Services\XmlRPC\Clients;
+namespace Supervisorg\Services\XmlRPC\Clients;
 
-use Supermonitord\Services\XmlRPC\Client;
+use Supervisorg\Services\XmlRPC\Client;
 use Puzzle\Configuration;
 
 class Zend implements Client

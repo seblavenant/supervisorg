@@ -1,6 +1,6 @@
 <?php
 
-namespace Supermonitord;
+namespace Supervisorg;
 
 use Spear\Silex\Application\AbstractApplication;
 use Silex\Provider\ServiceControllerServiceProvider;

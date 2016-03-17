@@ -1,14 +1,14 @@
 <?php
 
-namespace Supermonitord\Controllers\Home;
+namespace Supervisorg\Controllers\Home;
 
 use Spear\Silex\Application\Traits;
 use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
-use Supermonitord\Services\XmlRPC\Client;
-use Supermonitord\Services\Process\Filter;
-use Supermonitord\Constants\ProcessState;
+use Supervisorg\Services\XmlRPC\Client;
+use Supervisorg\Services\Process\Filter;
+use Supervisorg\Constants\ProcessState;
 
 class Controller
 {

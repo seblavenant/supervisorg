@@ -1,6 +1,6 @@
 <?php
 
-namespace Supermonitord\Constants;
+namespace Supervisorg\Constants;
 
 interface ProcessState
 {

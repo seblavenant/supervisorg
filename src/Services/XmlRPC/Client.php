@@ -1,6 +1,6 @@
 <?php
 
-namespace Supermonitord\Services\XmlRPC;
+namespace Supervisorg\Services\XmlRPC;
 
 interface Client
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Supermonitord\Services\Process\Filters;
+namespace Supervisorg\Services\Process\Filters;
 
-use Supermonitord\Services\Process\Filter;
+use Supervisorg\Services\Process\Filter;
 
 // FIXLE : add unit tests
 class Name implements Filter

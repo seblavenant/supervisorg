@@ -1,6 +1,6 @@
 <?php
 
-namespace Supermonitord\Services\Process;
+namespace Supervisorg\Services\Process;
 
 use Silex\ServiceProviderInterface;
 use Silex\Application;

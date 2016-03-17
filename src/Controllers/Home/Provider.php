@@ -1,6 +1,6 @@
 <?php
 
-namespace Supermonitord\Controllers\Home;
+namespace Supervisorg\Controllers\Home;
 
 use Silex\ControllerProviderInterface;
 use Silex\Application;
