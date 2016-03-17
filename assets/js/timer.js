@@ -15,6 +15,7 @@ var countdown = $countdown.countdown360({
 });
 
 countdown.start();
+$refreshButton = $('#refresh');
 $playButton = $('#play');
 $stopButton = $('#stop');
 $('#stop').click(function() {
@@ -29,4 +30,8 @@ $('#play').click(function() {
     $stopButton.show();
     $playButton.hide();
     return false;
+});
+
+$refreshButton.click(function() {
+    window.location.reload(false);
 });
