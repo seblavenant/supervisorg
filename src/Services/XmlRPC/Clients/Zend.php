@@ -3,16 +3,15 @@
 namespace Supervisorg\Services\XmlRPC\Clients;
 
 use Supervisorg\Services\XmlRPC\Client;
-use Puzzle\Configuration;
 
 class Zend implements Client
 {
     private
         $client;
 
-    public function __construct(Configuration $configuration)
+    public function __construct($host)
     {
-        $this->client = new \Zend\XmlRpc\Client($configuration->readRequired('xmlrpc/host'));
+        $this->client = new \Zend\XmlRpc\Client($host);
     }
 
     public function getProcessList()

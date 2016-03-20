@@ -15,11 +15,14 @@
 
         </div>
     </div>
+    {% for server in servers %}
+    <h2>{{ server.name }}</h2>
     <div class="row">
-    {% for process in processList %}
-        {% embed 'partials/process_tile.twig' %}{% endembed %}
-    {% endfor %}
+        {% for process in server.processList %}
+            {% embed 'partials/process_tile.twig' %}{% endembed %}
+        {% endfor %}
     </div>
+    {% endfor %}
 {% endblock %}
 
 

@@ -18,9 +18,9 @@
     {% endif %}
 
     {% if process.statename == 'RUNNING' %}
-        <a href="{{ path('process.stop', {process: process.name})}}" class="btn btn-danger">STOP PROCESS</a>
+        <a href="{{ path('process.stop', {server: server.name, process: process.name})}}" class="btn btn-danger">STOP PROCESS</a>
     {% elseif process.statename in ['STOPPED', 'FATAL'] %}
-        <a href="{{ path('process.start', {process: process.name})}}" class="btn btn-primary">RESTART</a>
+        <a href="{{ path('process.start', {server: server.name, process: process.name})}}" class="btn btn-primary">RESTART</a>
     {% endif %}
 
 </div>

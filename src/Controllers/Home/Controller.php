@@ -6,7 +6,6 @@ use Spear\Silex\Application\Traits;
 use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
-use Supervisorg\Services\XmlRPC\Client;
 use Supervisorg\Services\Process\Filter;
 use Supervisorg\Constants\ProcessState;
 
@@ -21,33 +20,20 @@ class Controller
     private
         $filter,
         $twig,
-        $client;
+        $servers;
 
-    public function __construct(\Twig_Environment $twig, Client $client, Filter $filter)
+    public function __construct(\Twig_Environment $twig, array $servers, Filter $filter)
     {
         $this->filter = $filter;
         $this->twig = $twig;
-        $this->client = $client;
+        $this->servers = $servers;
 
         $this->logger = new NullLogger();
     }
 
     public function homeAction()
     {
-        $processList = $this->client->getProcessList();
-
-        $processList = $this->filter->filter($processList);
-
-        // FIXME
-        foreach($processList as $index => $process)
-        {
-            if(in_array($process['statename'], [ ProcessState::BACKOFF, ProcessState::FATAL ]))
-            {
-                $processList[$index]['stderr'] = $this->client->readStdErr($process['name']);
-            }
-        }
-
-        return $this->twig->render('home.html.twig', ['processList' => $processList]);
+        return $this->twig->render('home.html.twig', ['servers' => $this->servers]);
     }
 
     public function helpAction()
@@ -57,7 +43,7 @@ class Controller
         return $this->twig->render('help.html.twig', ['help' => $help]);
     }
 
-    public function stopProcessAction($process)
+    public function stopProcessAction($server, $process)
     {
         if(empty($process))
         {
@@ -66,7 +52,14 @@ class Controller
             return $this->redirect('home');
         }
 
-        $return = $this->client->stopProcess($process);
+        if( ! array_key_exists($server, $this->servers))
+        {
+            $this->addErrorFlash('Error while trying to stop process.');
+
+            return $this->redirect('home');
+        }
+
+        $return = $this->servers[$server]->stopProcess($process);
 
         if(! $return)
         {
@@ -80,7 +73,7 @@ class Controller
         return $this->redirect('home');
     }
 
-    public function startProcessAction($process)
+    public function startProcessAction($server, $process)
     {
         if(empty($process))
         {
@@ -89,7 +82,15 @@ class Controller
             return $this->redirect('home');
         }
 
-        $return = $this->client->startProcess($process);
+        if( ! array_key_exists($server, $this->servers))
+        {
+            $this->addErrorFlash('Error while trying to stop process.');
+
+            return $this->redirect('home');
+        }
+
+        $server = $this->servers[$server];
+        $return = $server->startProcess($process);
 
         if(! $return)
         {

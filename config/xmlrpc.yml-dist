@@ -1,1 +1,4 @@
-host: http://127.0.0.1:9001/RPC2
+servers:
+    -
+        host: 127.0.0.1
+        port: 9001
