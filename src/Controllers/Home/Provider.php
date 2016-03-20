@@ -26,11 +26,6 @@ class Provider implements ControllerProviderInterface
             ->bind('home');
 
         $controllers
-            ->match('/help', 'controller.home:helpAction')
-            ->method('GET')
-            ->bind('help');
-
-        $controllers
             ->match('/server/{server}/process/stop/{process}', 'controller.home:stopProcessAction')
             ->assert('server', '[\w-_.]+')
             ->assert('process', '[\w-_.]+')

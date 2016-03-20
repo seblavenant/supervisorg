@@ -33,13 +33,6 @@ class Controller
         return $this->twig->render('home.html.twig', ['servers' => $this->servers]);
     }
 
-    public function helpAction()
-    {
-        $help = $this->client->getHelp();
-
-        return $this->twig->render('help.html.twig', ['help' => $help]);
-    }
-
     public function stopProcessAction($server, $process)
     {
         if(empty($process))

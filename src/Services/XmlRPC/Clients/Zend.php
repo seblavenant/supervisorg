@@ -33,23 +33,4 @@ class Zend implements Client
     {
         return $this->client->call('supervisor.readProcessStderrLog', array($process, -1000, 0));
     }
-
-    /*
-     * FIXME : TMP for dev
-     */
-    public function getHelp()
-    {
-        $methods = $this->client->call('system.listMethods');
-
-        $help = '';
-        foreach($methods as $method)
-        {
-            $help .= '<dl>';
-                $help .= '<dt><strong>' . $method . '</strong></dt>';
-                $help .= '<dd><pre>' . $this->client->call('system.methodHelp', [$method]) . '</pre></dd>';
-            $help .= '</dl>';
-        }
-
-        return $help;
-    }
 }
