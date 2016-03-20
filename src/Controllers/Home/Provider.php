@@ -10,7 +10,7 @@ class Provider implements ControllerProviderInterface
     public function connect(Application $app)
     {
         $app['controller.home'] = function() use($app) {
-            $controller = new Controller($app['twig'], $app['supervisor.servers'], $app['process.filter.name']);
+            $controller = new Controller($app['twig'], $app['supervisor.servers']);
             $controller->setRequest($app['request']);
             $controller->setSession($app['session']);
             $controller->setUrlGenerator($app['url_generator']);

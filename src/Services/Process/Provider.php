@@ -9,8 +9,8 @@ class Provider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
-        $app['process.filter.name'] = $app->share(function($c) {
-            return new Filters\Name($c['configuration']->read('filter/process/names', []));
+        $app['process.filter.process-name'] = $app->protect(function($filteredProcessNames) {
+            return new Filters\Name($filteredProcessNames);
         });
     }
 

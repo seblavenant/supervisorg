@@ -2,15 +2,19 @@
 
 namespace Supervisorg\Services\XmlRPC;
 
+use Supervisorg\Services\Process\Filter;
+
 class Server
 {
     private
         $name,
+        $filter,
         $client;
 
-    public function __construct($name, Client $client)
+    public function __construct($name, Client $client, Filter $filter)
     {
         $this->name = (string) $name;
+        $this->filter = $filter;
         $this->client = $client;
     }
 
@@ -31,6 +35,8 @@ class Server
 
     public function getProcessList()
     {
-        return $this->client->getProcessList();
+        $processList = $this->client->getProcessList();
+
+        return $this->filter->filter($processList);
     }
 }

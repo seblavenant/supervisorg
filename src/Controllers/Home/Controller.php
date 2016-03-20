@@ -6,7 +6,6 @@ use Spear\Silex\Application\Traits;
 use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
-use Supervisorg\Services\Process\Filter;
 use Supervisorg\Constants\ProcessState;
 
 class Controller
@@ -18,13 +17,11 @@ class Controller
         LoggerAwareTrait;
 
     private
-        $filter,
         $twig,
         $servers;
 
-    public function __construct(\Twig_Environment $twig, array $servers, Filter $filter)
+    public function __construct(\Twig_Environment $twig, array $servers)
     {
-        $this->filter = $filter;
         $this->twig = $twig;
         $this->servers = $servers;
 
