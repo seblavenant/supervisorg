@@ -1,0 +1,36 @@
+dashboard:
+    image: supervisorg/demo/php-apache
+    container_name: supervisorg-demo-dashboard
+    volumes_from:
+        - supervisorg-src
+    volumes:
+        - ../demo/config/apache2/vhost.conf:/etc/apache2/sites-enabled/vhost.conf
+        - ./var:/var/www/supervisorg/var
+    ports:
+        - "80:80"
+    links:
+        - server-1
+        - server-2
+        - server-3
+
+supervisorg-src:
+    image: supervisorg
+    command: chmod 33:33 -Rf /var/www/supervisorg && tail -f /dev/null
+
+server-1:
+    image: supervisorg/demo/supervisord
+    container_name: supervisorg-demo-server-1
+    volumes:
+        - ../demo/config/supervisor/server-1.conf:/etc/supervisor/conf.d/server.conf
+
+server-2:
+    image: supervisorg/demo/supervisord
+    container_name: supervisorg-demo-server-2
+    volumes:
+        - ../demo/config/supervisor/server-2.conf:/etc/supervisor/conf.d/server.conf
+
+server-3:
+    image: supervisorg/demo/supervisord
+    container_name: supervisorg-demo-server-3
+    volumes:
+        - ../demo/config/supervisor/server-3.conf:/etc/supervisor/conf.d/server.conf
