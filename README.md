@@ -30,8 +30,10 @@ $ docker build --rm=true -t supervisorg/demo/supervisord .
 
 **Note** : you can also use the `make` in the image directories to build them.
 
-To run the containers :
+Then run the containers :
 ```shell
 $ cd docker/demo
 $ docker-compose up -d
 ```
+
+To access to the dashboard `http://<DOCKER_MACHINE_IP>`
