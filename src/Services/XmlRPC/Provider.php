@@ -13,7 +13,7 @@ class Provider implements ServiceProviderInterface
         $app['supervisor.servers'] = $app->share(function($c) {
             $servers = [];
 
-            foreach($c['configuration']->readRequired('xmlrpc/servers', []) as $serverConfiguration)
+            foreach($c['configuration']->readRequired('supervisor/servers', []) as $serverConfiguration)
             {
                 $hostname = $serverConfiguration['host'];
                 $host = sprintf('http://%s:%d/RPC2', $hostname, $serverConfiguration['port']);
