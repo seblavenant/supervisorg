@@ -15,7 +15,7 @@ dashboard:
 
 supervisorg-src:
     image: supervisorg
-    command: chmod 33:33 -Rf /var/www/supervisorg && tail -f /dev/null
+    command: chown 33:33 -Rf /var/www/supervisorg
 
 server-1:
     image: supervisorg/demo/supervisord
