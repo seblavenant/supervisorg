@@ -4,9 +4,49 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3f21d6f2f7575996fd6f704af7898551",
-    "content-hash": "74bbebaba7cb6324ac0578d2f0675d66",
+    "hash": "c2884c41dc8e03ea04f077efd3d24264",
+    "content-hash": "5c81b474cb0d54c8d2861335d2679875",
     "packages": [
+        {
+            "name": "almasaeed2010/adminlte",
+            "version": "v2.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/almasaeed2010/AdminLTE.git",
+                "reference": "1ee281b3b99e8d8cccdc72fb8437c6888149cb46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/1ee281b3b99e8d8cccdc72fb8437c6888149cb46",
+                "reference": "1ee281b3b99e8d8cccdc72fb8437c6888149cb46",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abdullah Almsaeed",
+                    "email": "support@almsaeedstudio.com"
+                }
+            ],
+            "description": "AdminLTE - admin control panel and dashboard that's based on Bootstrap 3",
+            "homepage": "http://almsaeedstudio.com/",
+            "keywords": [
+                "JS",
+                "admin",
+                "back-end",
+                "css",
+                "less",
+                "responsive",
+                "template",
+                "theme",
+                "web"
+            ],
+            "time": "2015-10-23 14:50:49"
+        },
         {
             "name": "cpliakas/git-wrapper",
             "version": "1.6.1",
@@ -415,6 +455,38 @@
                 "silex"
             ],
             "time": "2014-02-15 20:06:27"
+        },
+        {
+            "name": "niktux/adminlte",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silex-spear/adminlte.git",
+                "reference": "fb7bc3506b9573ea87fdc8e75602376274e609d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silex-spear/adminlte/zipball/fb7bc3506b9573ea87fdc8e75602376274e609d7",
+                "reference": "fb7bc3506b9573ea87fdc8e75602376274e609d7",
+                "shasum": ""
+            },
+            "require": {
+                "almasaeed2010/adminlte": "2.3.2",
+                "fortawesome/font-awesome": "~4.3",
+                "oyejorge/less.php": "~1.7",
+                "twbs/bootstrap": "~3.3"
+            },
+            "bin": [
+                "lessc-adminlte"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spear\\AdminLTE\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2016-03-25 21:36:44"
         },
         {
             "name": "niktux/karma",
@@ -3264,7 +3336,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "niktux/adminlte": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

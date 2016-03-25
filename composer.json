@@ -15,7 +15,8 @@
         "twbs/bootstrap" : "~3.3",
         "oyejorge/less.php" : "~1.7",
         "fortawesome/font-awesome": "~4.3",
-        "zendframework/zend-xmlrpc": "^2.5"
+        "zendframework/zend-xmlrpc": "^2.5",
+        "niktux/adminlte": "dev-master"
     },
     "autoload" : {
         "psr-4" : {

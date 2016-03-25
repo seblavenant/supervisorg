@@ -1,4 +1,15 @@
-{% extends 'common/body.html.twig' %}
+{% extends 'admin/common/body.twig' %}
+
+{% block title %}Supervisorg{% endblock %}
+{% block skin %}skin-purple{% endblock %}
+
+{% block header %}
+    {% include 'header.twig' %}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'sidebar.twig' %}
+{% endblock %}
 
 {% block body %}
     <div class="row">
