@@ -1,2 +1,2 @@
-#!/bin/bash
+#!/bin/sh
 vendor/bin/lessc assets/less/build.less assets/compiled/main.css
