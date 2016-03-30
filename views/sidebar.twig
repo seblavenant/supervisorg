@@ -4,4 +4,13 @@
 {% block search %}{% endblock %}
 
 {% block menuHeader %}Applications{% endblock %}
-{% block menu %}{% endblock %}
+{% block menu %}
+<form action="#" method="get" class="sidebar-form">
+    <div class="input-group">
+        <input type="text" name="process-search" class="form-control" id="process-search" placeholder="Process or state">
+        <span class="input-group-btn">
+            <button type="submit" name="search" id="process-search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+        </span>
+    </div>
+</form>
+{% endblock %}

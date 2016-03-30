@@ -1,32 +1,68 @@
-$searchInput = $('#process-search');
+var Searcher = (function($) {
 
-Mousetrap.bind('f', function() {
-    $searchInput.focus();
-    return false;
-});
+    Searcher = function() {
+        this.$searchInput = $('#process-search');
+        this.$searchSubmitButton = $('#process-search-btn');
+    };
 
-$searchInput.on('keyup', function() {
-    var searchedValue = $(this).val().toLowerCase();
+    Searcher.prototype.init = function() {
+        this.bindEvents();
+    };
 
-    if(searchedValue == '')
-    {
-        $('.process-tile').each(function(index, $item) {
-            $(this).show();
+    Searcher.prototype.bindEvents = function() {
+        var self = this;
+
+        Mousetrap.bind('f', function() {
+            self.$searchInput.focus();
+            return false;
         });
 
-        return;
-    }
+        self.$searchInput.on('keyup', function() {
+            var searchedValue = $(this).val().toLowerCase();
+            self.search(searchedValue);
+        });
 
-    $('.process-tile').each(function(index, $item) {
-        var processName = $(this).data('process-name').toLowerCase();
-        var stateName = $(this).data('process-state-name').toLowerCase();
+        self.$searchInput.on('keyup', function(e) {
+            self.search();
+            e.preventDefault();
+        });
 
-        var isNameMatching = (processName.indexOf(searchedValue) > -1)
-        var isStateNameMatching = (stateName.indexOf(searchedValue) > -1)
+        self.$searchSubmitButton.on('click', function(e) {
+            self.search();
 
-        if( ! isNameMatching && ! isStateNameMatching )
+            e.preventDefault();
+        })
+    };
+
+    Searcher.prototype.search = function() {
+        var searchedValue = this.$searchInput.val().toLowerCase();
+
+        if(searchedValue == '')
         {
-            $(this).hide()
+            $('.process-tile').each(function(index, $item) {
+                $(this).show();
+            });
+
+            return;
         }
-    });
-});
+
+        $('.process-tile').each(function(index, $item) {
+            var processName = $(this).data('process-name').toLowerCase();
+            var stateName = $(this).data('process-state-name').toLowerCase();
+
+            var isNameMatching = (processName.indexOf(searchedValue) > -1);
+            var isStateNameMatching = (stateName.indexOf(searchedValue) > -1);
+
+            $(this).show();
+            if( ! isNameMatching && ! isStateNameMatching )
+            {
+                $(this).hide();
+            }
+        });
+    };
+
+    return Searcher;
+})(jQuery);
+
+var searcher = new Searcher();
+searcher.init();
