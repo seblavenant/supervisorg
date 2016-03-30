@@ -1,7 +1,7 @@
 NAME=supervisorg/demo/supervisord
 
 all:
-	docker build --rm=true -t $(NAME) .
+	docker build --force-rm -t $(NAME) .
 
 nocache:
-	docker build --rm=true --no-cache -t $(NAME) .
+	docker build --force-rm --no-cache -t $(NAME) .
