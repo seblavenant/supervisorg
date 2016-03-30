@@ -30,7 +30,9 @@ class Controller
 
     public function homeAction()
     {
-        return $this->twig->render('home.html.twig', ['servers' => $this->servers]);
+        return $this->twig->render('home.twig', [
+            'servers' => $this->servers,
+        ]);
     }
 
     public function stopProcessAction($server, $process)
