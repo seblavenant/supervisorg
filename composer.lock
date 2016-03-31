@@ -462,12 +462,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silex-spear/adminlte.git",
-                "reference": "d1ed2f85a9c987543419f73a984d245b0d47a175"
+                "reference": "5580ac6f67946c9bbd90d6d728679014a4a763dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silex-spear/adminlte/zipball/d1ed2f85a9c987543419f73a984d245b0d47a175",
-                "reference": "d1ed2f85a9c987543419f73a984d245b0d47a175",
+                "url": "https://api.github.com/repos/silex-spear/adminlte/zipball/5580ac6f67946c9bbd90d6d728679014a4a763dd",
+                "reference": "5580ac6f67946c9bbd90d6d728679014a4a763dd",
                 "shasum": ""
             },
             "require": {
@@ -486,7 +486,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2016-03-31 09:45:22"
+            "time": "2016-03-31 16:41:46"
         },
         {
             "name": "niktux/karma",
