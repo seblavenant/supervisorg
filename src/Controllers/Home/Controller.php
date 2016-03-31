@@ -30,8 +30,25 @@ class Controller
 
     public function homeAction()
     {
+        $processes = [];
+        foreach($this->servers as $server)
+        {
+            $processes = array_merge($processes, $server->getProcessList());
+        }
+        
         return $this->twig->render('home.twig', [
             'servers' => $this->servers,
+            'processes' => $processes,
+        ]);
+    }
+
+    public function serversAction($serverName)
+    {
+        $server = $this->servers[$serverName];
+        
+        return $this->twig->render('home.twig', [
+            'servers' => $this->servers,
+            'processes' => $server->getProcessList(),
         ]);
     }
 
