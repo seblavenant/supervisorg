@@ -32,16 +32,16 @@ class Provider implements ControllerProviderInterface
             ->bind('servers');
 
         $controllers
-            ->match('/servers/{server}/process/stop/{process}', 'controller.home:stopProcessAction')
-            ->assert('server', '[\w-_.]+')
-            ->assert('process', '[\w-_.]+')
+            ->match('/servers/{serverName}/process/stop/{processName}', 'controller.home:stopProcessAction')
+            ->assert('serverName', '[\w-_.]+')
+            ->assert('processName', '[\w-_.]+')
             ->method('GET')
             ->bind('process.stop');
 
         $controllers
-            ->match('/servers/{server}/process/start/{process}', 'controller.home:startProcessAction')
-            ->assert('server', '[\w-_.]+')
-            ->assert('process', '[\w-_.]+')
+            ->match('/servers/{serverName}/process/start/{processName}', 'controller.home:startProcessAction')
+            ->assert('serverName', '[\w-_.]+')
+            ->assert('processName', '[\w-_.]+')
             ->method('GET')
             ->bind('process.start');
 

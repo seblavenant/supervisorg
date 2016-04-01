@@ -35,7 +35,7 @@ class Controller
         {
             $processes = array_merge($processes, $server->getProcessList());
         }
-        
+
         return $this->twig->render('home.twig', [
             'servers' => $this->servers,
             'processes' => $processes,
@@ -45,30 +45,30 @@ class Controller
     public function serversAction($serverName)
     {
         $server = $this->servers[$serverName];
-        
+
         return $this->twig->render('home.twig', [
             'servers' => $this->servers,
             'processes' => $server->getProcessList(),
         ]);
     }
 
-    public function stopProcessAction($server, $process)
+    public function stopProcessAction($serverName, $processName)
     {
-        if(empty($process))
+        if(empty($processName))
         {
             $this->addErrorFlash('Empty process name !');
 
             return $this->redirect('home');
         }
 
-        if( ! array_key_exists($server, $this->servers))
+        if( ! array_key_exists($serverName, $this->servers))
         {
             $this->addErrorFlash('Error while trying to stop process.');
 
             return $this->redirect('home');
         }
 
-        $return = $this->servers[$server]->stopProcess($process);
+        $return = $this->servers[$serverName]->stopProcess($processName);
 
         if(! $return)
         {
@@ -77,29 +77,29 @@ class Controller
             return $this->redirect('home');
         }
 
-        $this->addInfoFlash(sprintf('Process %s stopping', $process));
+        $this->addInfoFlash(sprintf('Process %s stopping', $processName));
 
         return $this->redirect('home');
     }
 
-    public function startProcessAction($server, $process)
+    public function startProcessAction($serverName, $processName)
     {
-        if(empty($process))
+        if(empty($processName))
         {
             $this->addErrorFlash('Empty process name !');
 
             return $this->redirect('home');
         }
 
-        if( ! array_key_exists($server, $this->servers))
+        if( ! array_key_exists($serverName, $this->servers))
         {
             $this->addErrorFlash('Error while trying to stop process.');
 
             return $this->redirect('home');
         }
 
-        $server = $this->servers[$server];
-        $return = $server->startProcess($process);
+        $server = $this->servers[$serverName];
+        $return = $server->startProcess($processName);
 
         if(! $return)
         {
@@ -108,7 +108,7 @@ class Controller
             return $this->redirect('home');
         }
 
-        $this->addInfoFlash(sprintf('Process %s starting', $process));
+        $this->addInfoFlash(sprintf('Process %s starting', $processName));
 
         return $this->redirect('home');
     }

@@ -37,11 +37,13 @@ class Server
     {
         $processList = $this->client->getProcessList();
 
-        foreach($processList as $index => $process)
+        $processes = [];
+        foreach($processList as $processInfo)
         {
-            $processList[$index]['server'] = $this;
+            $processInfo['server'] = $this;
+            $processes[] = new Process($processInfo);
         }
-        
-        return $this->filter->filter($processList);
+
+        return $this->filter->filter($processes);
     }
 }

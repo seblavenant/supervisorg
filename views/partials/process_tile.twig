@@ -17,7 +17,7 @@
 
 
     <div class="small-box bg-{{ class }}">
-    
+
         <div class="inner">
           <span class="pull-right">
             <small>
@@ -28,13 +28,13 @@
 
           <h4 class="processName">{{ process.name }}</h4>
           <p class="processDescription" title="{{ process.description|e('html') }}">{{ process.description }}</p>
-          
+
         </div>
-        
+
         <div class="icon">
           <i class="fa fa-{{ icon }}"></i>
         </div>
-        
+
         <span href="#" class="small-box-footer clearfix">
             <div class="row">
               <div class="col-md-9">
@@ -42,11 +42,11 @@
               </div>
               <div class="col-md-3">
                 {% if process.statename == 'RUNNING' %}
-                    <a href="{{ path('process.stop', {server: process.server.name, process: process.name})}}" class="btn btn-xs btn-danger">
+                    <a href="{{ path('process.stop', {serverName: process.server.name, processName: process.name})}}" class="btn btn-xs btn-danger">
                         <i class="fa fa-stop"></i>
                     </a>
                 {% elseif process.statename in ['STOPPED', 'FATAL'] %}
-                    <a href="{{ path('process.start', {server: process.server.name, process: process.name})}}" class="btn btn-xs btn-default">
+                    <a href="{{ path('process.start', {serverName: process.server.name, processName: process.name})}}" class="btn btn-xs btn-default">
                         <i class="fa fa-play"></i>
                     </a>
                 {% endif %}
