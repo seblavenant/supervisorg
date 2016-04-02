@@ -25,7 +25,7 @@
     {% endfor %}
     {{ ui_menu.multi('Servers', 'server', serverMenuItems) }}
 
-	{% if apps is not empty %}
+    {% if apps is not empty %}
     {% set appMenuItems = [] %}
     {% for app in apps %}
         {% set appMenuItems = appMenuItems|merge([{
@@ -35,7 +35,7 @@
         }]) %}
     {% endfor %}
     {{ ui_menu.multi('Applications', 'desktop', appMenuItems) }}
-	{% endif %}
+    {% endif %}
 
   </ul>
 {% endblock %}
