@@ -59,6 +59,6 @@ class Server
             $apps[] = $process->getApplication();
         }
 
-        return $apps;
+        return array_unique($apps);
     }
 }
