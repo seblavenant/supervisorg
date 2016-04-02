@@ -10,7 +10,7 @@ class Provider implements ControllerProviderInterface
     public function connect(Application $app)
     {
         $app['controller.home'] = function() use($app) {
-            $controller = new Controller($app['twig'], $app['supervisor.servers']);
+            $controller = new Controller($app['twig'], $app['supervisor.servers'], $app['configuration']);
             $controller->setRequest($app['request']);
             $controller->setSession($app['session']);
             $controller->setUrlGenerator($app['url_generator']);
@@ -30,6 +30,12 @@ class Provider implements ControllerProviderInterface
             ->assert('serverName', '[\w-_.]+')
             ->method('GET')
             ->bind('servers');
+
+        $controllers
+            ->match('/applications/{applicationName}', 'controller.home:applicationsAction')
+            ->assert('applicationName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('applications');
 
         $controllers
             ->match('/servers/{serverName}/process/stop/{processName}', 'controller.home:stopProcessAction')

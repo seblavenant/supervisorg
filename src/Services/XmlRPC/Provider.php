@@ -21,7 +21,8 @@ class Provider implements ServiceProviderInterface
                 $server = new Server(
                     $hostname,
                     $c['supervisor.client.factory']($host),
-                    $this->buildServerFilters($serverConfiguration, $c)
+                    $this->buildServerFilters($serverConfiguration, $c),
+                    $c['configuration']
                 );
 
                 $servers[$hostname] = $server;
@@ -31,7 +32,9 @@ class Provider implements ServiceProviderInterface
         });
 
         $app['supervisor.client.factory'] = $app->protect(function($host) {
-            return new Clients\Zend($host);
+            return new CachedClient(
+                new Clients\Zend($host)
+            );
         });
     }
 
