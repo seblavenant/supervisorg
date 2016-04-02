@@ -32,7 +32,7 @@
               {{ process.application }}
           </span>
           {% endif %}
-          <h4 class="processName">{{ process.name }}</h4>
+          <h4 class="processName" title="{{ process.name }}">{{ process.name }}</h4>
           <p class="processDescription" title="{{ process.description|e('html') }}">{{ process.description }}</p>
 
         </div>
@@ -46,7 +46,7 @@
               <div class="col-md-9">
                   <small>{{ process.statename }}</small>
               </div>
-              <div class="col-md-3">
+              <div class="controlButton col-md-3">
                 {% if process.statename == 'RUNNING' %}
                     <a href="{{ path('process.stop', {serverName: process.server.name, processName: process.fullName})}}" class="btn btn-xs btn-danger">
                         <i class="fa fa-stop"></i>

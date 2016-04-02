@@ -40,3 +40,34 @@ span.processApplication
 		margin-right: 5px;
 	}
 }
+
+div.small-box.condensedView
+{
+	h4.processName {
+		height: 20px;
+	    overflow: hidden;
+    	text-overflow: ellipsis;
+    	white-space: nowrap;
+    	margin-bottom: 0px;
+    	width: 88%;
+	}
+	
+	div.icon,
+	p.processDescription,
+	span.small-box-footer {
+		height: 0px;
+		visibility: hidden;
+		
+		div.controlButton {
+			top: -40px;
+			visibility: visible;
+		}
+	}
+	
+	div.icon {
+	  -webkit-transition: all 0s linear;
+  	  -o-transition: all 0s linear;
+  	  transition: all 0s linear;
+	}
+	
+}
