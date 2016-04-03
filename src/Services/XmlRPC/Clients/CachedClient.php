@@ -1,6 +1,8 @@
 <?php
 
-namespace Supervisorg\Services\XmlRPC;
+namespace Supervisorg\Services\XmlRPC\Clients;
+
+use Supervisorg\Services\XmlRPC\Client;
 
 class CachedClient implements Client
 {

@@ -32,7 +32,7 @@ class Provider implements ServiceProviderInterface
         });
 
         $app['supervisor.client.factory'] = $app->protect(function($host) {
-            return new CachedClient(
+            return new Clients\CachedClient(
                 new Clients\Zend($host)
             );
         });
