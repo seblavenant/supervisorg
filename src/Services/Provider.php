@@ -9,7 +9,7 @@ class Provider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
-        $app->register(new Process\Provider());
+        $app->register(new Processes\Provider());
         $app->register(new XmlRPC\Provider());
     }
 

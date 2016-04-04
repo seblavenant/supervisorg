@@ -8,7 +8,7 @@ use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Supervisorg\Constants\ProcessState;
 use Puzzle\Configuration;
-use Supervisorg\Services\ApplicationFilterIterator;
+use Supervisorg\Domain\Iterators\ApplicationFilterIterator;
 
 class Controller
 {

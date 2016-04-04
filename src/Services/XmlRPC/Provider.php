@@ -4,7 +4,8 @@ namespace Supervisorg\Services\XmlRPC;
 
 use Silex\ServiceProviderInterface;
 use Silex\Application;
-use Supervisorg\Services\Process\FilterCollection;
+use Supervisorg\Services\Processes\FilterCollection;
+use Supervisorg\Domain\Server;
 
 class Provider implements ServiceProviderInterface
 {

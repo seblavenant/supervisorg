@@ -1,8 +1,9 @@
 <?php
 
-namespace Supervisorg\Services\XmlRPC;
+namespace Supervisorg\Domain;
 
-use Supervisorg\Services\Process\Filter;
+use Supervisorg\Services\Processes\Filter;
+use Supervisorg\Services\XmlRPC\Client;
 use Puzzle\Configuration;
 
 class Server

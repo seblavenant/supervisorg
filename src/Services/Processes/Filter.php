@@ -1,6 +1,6 @@
 <?php
 
-namespace Supervisorg\Services\Process;
+namespace Supervisorg\Services\Processes;
 
 interface Filter
 {

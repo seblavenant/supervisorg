@@ -1,8 +1,8 @@
 <?php
 
-namespace Supervisorg\Services;
+namespace Supervisorg\Domain\Iterators;
 
-use Supervisorg\Services\XmlRPC\Process;
+use Supervisorg\Domain\Process;
 
 class ApplicationFilterIterator extends \FilterIterator
 {

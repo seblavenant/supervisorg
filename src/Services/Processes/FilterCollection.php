@@ -1,8 +1,6 @@
 <?php
 
-namespace Supervisorg\Services\Process;
-
-use Supervisorg\Services\Process\Filter;
+namespace Supervisorg\Services\Processes;
 
 class FilterCollection implements Filter
 {
