@@ -13,15 +13,20 @@
 
 {% block pageTitle %}
     {{title}}
-    {% if subTitle is defined %}
-        <small>{{ subTitle }}</small>
-    {% endif %}
+    <small>
+    {% if nbProcesses is defined %}
+        {{ nbProcesses }}
+    {% else %}
+        {{ processes|length }}
+    {% endif %} processes</small>
 {% endblock %}
 
 {% block body %}
+    <div class="row">
     {% for process in processes %}
         {% embed 'partials/process_tile.twig' %}{% endembed %}
     {% endfor %}
+    </div>
 {% endblock %}
 
 

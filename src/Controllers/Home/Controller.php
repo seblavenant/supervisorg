@@ -81,7 +81,6 @@ class Controller
 
         return $this->twig->render('home.twig', [
             'title' => $serverName,
-            'subTitle' => 'server',
             'processes' => $server->getProcessList(),
         ]);
     }
@@ -101,8 +100,8 @@ class Controller
 
         return $this->twig->render('home.twig', [
             'title' => "$applicationName",
-            'subTitle' => 'application',
             'processes' => $processes,
+            'nbProcesses' => iterator_count($processes),
         ]);
     }
 
