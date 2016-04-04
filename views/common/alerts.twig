@@ -8,11 +8,11 @@
             {% set icon = 'glyphicon glyphicon-ok-sign' %}
         {% endif %}
         {% if type == 'warning' %}
-            {% set icon = 'glyphicon glyphicon-exclamation-sign' %}
+            {% set icon = 'warning' %}
         {% endif %}
         {% if type == 'error' %}
             {% set cssClass = 'danger' %}
-            {% set icon = 'glyphicon glyphicon-remove-sign' %}
+            {% set icon = 'ban' %}
         {% endif %}
 
         {% for message in alerts %}
