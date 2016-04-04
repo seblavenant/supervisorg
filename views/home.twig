@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block sidebar %}
-    {% include 'sidebar.twig' %}
+    {{ render(url('sidebar')) }}
 {% endblock %}
 
 {% block pageTitle %}

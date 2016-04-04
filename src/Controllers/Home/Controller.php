@@ -62,10 +62,17 @@ class Controller
 
         return $this->twig->render('home.twig', [
             'title' => 'All processes',
-            'servers' => $this->servers,
-            'apps' => $this->applications,
             'processes' => $processes,
         ]);
+    }
+
+    public function sidebarAction()
+    {
+        return $this->twig->render('sidebar.twig', [
+            'servers' => $this->servers,
+            'apps' => $this->applications
+        ]);
+
     }
 
     public function serversAction($serverName)
@@ -75,8 +82,6 @@ class Controller
         return $this->twig->render('home.twig', [
             'title' => $serverName,
             'subTitle' => 'server',
-            'servers' => $this->servers,
-            'apps' => $this->applications,
             'processes' => $server->getProcessList(),
         ]);
     }
@@ -97,8 +102,6 @@ class Controller
         return $this->twig->render('home.twig', [
             'title' => "$applicationName",
             'subTitle' => 'application',
-            'servers' => $this->servers,
-            'apps' => $this->applications,
             'processes' => $processes,
         ]);
     }

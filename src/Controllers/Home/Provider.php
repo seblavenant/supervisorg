@@ -26,6 +26,11 @@ class Provider implements ControllerProviderInterface
             ->bind('home');
 
         $controllers
+            ->match('/ui/sidebar', 'controller.home:sidebarAction')
+            ->method('GET')
+            ->bind('sidebar');
+
+        $controllers
             ->match('/servers/{serverName}', 'controller.home:serversAction')
             ->assert('serverName', '[\w-_.]+')
             ->method('GET')
