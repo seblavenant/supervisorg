@@ -11,6 +11,13 @@
     {% include 'sidebar.twig' %}
 {% endblock %}
 
+{% block pageTitle %}
+    {{title}}
+    {% if subTitle is defined %}
+        <small>{{ subTitle }}</small>
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     {% for process in processes %}
         {% embed 'partials/process_tile.twig' %}{% endembed %}
