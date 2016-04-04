@@ -1,26 +1,63 @@
 <div class="col-md-3 process-tile"
-    data-process-name="{{ process.name }}"
+    data-process-name="{{ process.fullName }}"
     data-process-state-name="{{ process.statename }}">
-    <h3>
-        <div>
-            {{ process.name }}
-            <div class="pull-right">
-                {% embed 'partials/process_state_label.twig' %}{% endembed %}
-            </div>
+
+    {% set class = 'aqua' %}
+    {% set icon = 'question' %}
+    {% if process.statename in [ 'RUNNING', 'STARTING' ] %}
+        {% set class = 'green' %}
+        {% set icon = 'refresh' %}
+    {% elseif process.statename in [ 'BACKOFF', 'STOPPING', 'STOPPED', 'EXITED' ] %}
+        {% set class = 'yellow' %}
+        {% set icon = 'exclamation-triangle' %}
+    {% elseif process.statename in [ 'FATAL' ] %}
+        {% set class = 'red' %}
+        {% set icon = 'close' %}
+    {% endif %}
+
+
+    <div class="small-box bg-{{ class }}">
+
+        <div class="inner">
+          <span class="processServer pull-right">
+            <small>
+                <i class="fa fa-server"></i>
+                {{ process.server.name }}
+            </small>
+          </span>
+
+          {% if process.application is not empty %}
+          <span class="processApplication">
+            <i class="fa fa-desktop"></i>
+              {{ process.application }}
+          </span>
+          {% endif %}
+          <h4 class="processName" title="{{ process.name }}">{{ process.name }}</h4>
+          <p class="processDescription" title="{{ process.description|e('html') }}">{{ process.description }}</p>
+
         </div>
-    </h3>
 
-    <pre>{{ process.description }}</pre>
+        <div class="icon">
+          <i class="fa fa-{{ icon }}"></i>
+        </div>
 
-    {% if process.statename in ['BACKOFF', 'FATAL'] %}
-        <em>STDERR</em>
-        <pre>{{ process.stderr }}</pre>
-    {% endif %}
-
-    {% if process.statename == 'RUNNING' %}
-        <a href="{{ path('process.stop', {server: server.name, process: process.name})}}" class="btn btn-danger">STOP PROCESS</a>
-    {% elseif process.statename in ['STOPPED', 'FATAL'] %}
-        <a href="{{ path('process.start', {server: server.name, process: process.name})}}" class="btn btn-primary">RESTART</a>
-    {% endif %}
-
+        <span href="#" class="small-box-footer clearfix">
+            <div class="row">
+              <div class="col-md-9">
+                  <small>{{ process.statename }}</small>
+              </div>
+              <div class="controlButton col-md-3">
+                {% if process.statename == 'RUNNING' %}
+                    <a href="{{ path('process.stop', {serverName: process.server.name, processName: process.fullName})}}" class="btn btn-xs btn-danger">
+                        <i class="fa fa-stop"></i>
+                    </a>
+                {% elseif process.statename in ['STOPPED', 'FATAL'] %}
+                    <a href="{{ path('process.start', {serverName: process.server.name, processName: process.fullName})}}" class="btn btn-xs btn-default">
+                        <i class="fa fa-play"></i>
+                    </a>
+                {% endif %}
+              </div>
+            </div>
+        </span>
+      </div>
 </div>

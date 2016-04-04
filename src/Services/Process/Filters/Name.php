@@ -3,8 +3,9 @@
 namespace Supervisorg\Services\Process\Filters;
 
 use Supervisorg\Services\Process\Filter;
+use Supervisorg\Services\XmlRPC\Process;
 
-// FIXLE : add unit tests
+// FIXME : add unit tests
 class Name implements Filter
 {
     private
@@ -19,7 +20,7 @@ class Name implements Filter
     {
         foreach($processList as $index => $process)
         {
-            if( ! is_array($process))
+            if( ! $process instanceof Process)
             {
                 continue;
             }
@@ -35,7 +36,7 @@ class Name implements Filter
 
     private function isFiltered(array $process)
     {
-        if(in_array($process['name'], $this->filteredProcessNames))
+        if(in_array($process->getName(), $this->filteredProcessNames))
         {
             return true;
         }

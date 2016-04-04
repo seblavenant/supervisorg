@@ -3,7 +3,6 @@
 {% block user %}{% endblock %}
 {% block search %}{% endblock %}
 
-{% block menuHeader %}Applications{% endblock %}
 {% block menu %}
 <form action="#" method="get" class="sidebar-form">
     <div class="input-group">
@@ -13,4 +12,30 @@
         </span>
     </div>
 </form>
+ <ul class="sidebar-menu">
+    <li class="header">Browse</li>
+
+    {% set serverMenuItems = [] %}
+    {% for server in servers %}
+        {% set serverMenuItems = serverMenuItems|merge([{
+            'route': 'servers',
+            'parameters': {'serverName': server.name},
+            'text': server.name
+        }]) %}
+    {% endfor %}
+    {{ ui_menu.multi('Servers', 'server', serverMenuItems) }}
+
+    {% if apps is not empty %}
+    {% set appMenuItems = [] %}
+    {% for app in apps %}
+        {% set appMenuItems = appMenuItems|merge([{
+            'route': 'applications',
+            'parameters': {'applicationName': app},
+            'text': app
+        }]) %}
+    {% endfor %}
+    {{ ui_menu.multi('Applications', 'desktop', appMenuItems) }}
+    {% endif %}
+
+  </ul>
 {% endblock %}

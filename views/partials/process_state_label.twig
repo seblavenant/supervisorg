@@ -1,9 +1,0 @@
-{% set class = 'default' %}
-{% if process.statename in [ 'RUNNING', 'STARTING' ] %}
-    {% set class = 'success' %}
-{% elseif process.statename in [ 'BACKOFF', 'STOPPING', 'STOPPED', 'EXITED' ] %}
-    {% set class = 'warning' %}
-{% elseif process.statename in [ 'FATAL' ] %}
-    {% set class = 'danger' %}
-{% endif %}
-<span class="label label-{{ class }}">{{ process.statename }}</span>

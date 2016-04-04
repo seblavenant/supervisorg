@@ -10,7 +10,7 @@ class Provider implements ControllerProviderInterface
     public function connect(Application $app)
     {
         $app['controller.home'] = function() use($app) {
-            $controller = new Controller($app['twig'], $app['supervisor.servers']);
+            $controller = new Controller($app['twig'], $app['supervisor.servers'], $app['configuration']);
             $controller->setRequest($app['request']);
             $controller->setSession($app['session']);
             $controller->setUrlGenerator($app['url_generator']);
@@ -26,16 +26,28 @@ class Provider implements ControllerProviderInterface
             ->bind('home');
 
         $controllers
-            ->match('/server/{server}/process/stop/{process}', 'controller.home:stopProcessAction')
-            ->assert('server', '[\w-_.]+')
-            ->assert('process', '[\w-_.]+')
+            ->match('/servers/{serverName}', 'controller.home:serversAction')
+            ->assert('serverName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('servers');
+
+        $controllers
+            ->match('/applications/{applicationName}', 'controller.home:applicationsAction')
+            ->assert('applicationName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('applications');
+
+        $controllers
+            ->match('/servers/{serverName}/process/stop/{processName}', 'controller.home:stopProcessAction')
+            ->assert('serverName', '[\w-_.]+')
+            ->assert('processName', '[\w-_.]+')
             ->method('GET')
             ->bind('process.stop');
 
         $controllers
-            ->match('/server/{server}/process/start/{process}', 'controller.home:startProcessAction')
-            ->assert('server', '[\w-_.]+')
-            ->assert('process', '[\w-_.]+')
+            ->match('/servers/{serverName}/process/start/{processName}', 'controller.home:startProcessAction')
+            ->assert('serverName', '[\w-_.]+')
+            ->assert('processName', '[\w-_.]+')
             ->method('GET')
             ->bind('process.start');
 

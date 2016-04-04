@@ -1,7 +1,7 @@
 {% extends 'admin/common/body.twig' %}
 
 {% block title %}Supervisorg{% endblock %}
-{% block skin %}skin-purple{% endblock %}
+{% block skin %}skin-blue{% endblock %}
 
 {% block header %}
     {% include 'header.twig' %}
@@ -12,13 +12,8 @@
 {% endblock %}
 
 {% block body %}
-    {% for server in servers %}
-    <h3><i class="fa fa-server"></i> {{ server.name }}</h3>
-    <div class="row">
-        {% for process in server.processList %}
-            {% embed 'partials/process_tile.twig' %}{% endembed %}
-        {% endfor %}
-    </div>
+    {% for process in processes %}
+        {% embed 'partials/process_tile.twig' %}{% endembed %}
     {% endfor %}
 {% endblock %}
 
