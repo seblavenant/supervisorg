@@ -3,7 +3,7 @@
 <div id="alerts-container">
     {% for type, alerts in app.session.getFlashBag.all %}
         {% set cssClass = type %}
-        {% set icon = '' %}
+        {% set icon = 'info' %}
         {% if type == 'success' %}
             {% set icon = 'glyphicon glyphicon-ok-sign' %}
         {% endif %}
@@ -16,9 +16,9 @@
         {% endif %}
 
         {% for message in alerts %}
-            <div class="alert alert-{{ cssClass }} alert-dismissable" >
+            <div class="alert alert-{{ cssClass }} alert-dismissible" >
                 <button type="button" class="close" data-dismiss="alert" >&times;</button>
-                {% if icon is not empty %}<span class="{{ icon }}"></span>{% endif %}
+                {% if icon is not empty %}<i class="icon fa fa-{{ icon }}"></i>{% endif %}
                 {{ message }}
             </div>
         {% endfor %}

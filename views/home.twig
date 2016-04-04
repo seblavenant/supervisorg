@@ -22,6 +22,7 @@
 {% endblock %}
 
 {% block body %}
+    {% include 'common/alerts.twig' %}
     <div class="row">
     {% for process in processes %}
         {% embed 'partials/process_tile.twig' %}{% endembed %}
