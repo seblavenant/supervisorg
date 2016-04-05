@@ -10,7 +10,11 @@ class Provider implements ControllerProviderInterface
     public function connect(Application $app)
     {
         $app['controller.home'] = function() use($app) {
-            $controller = new Controller($app['twig'], $app['supervisor.servers'], $app['configuration']);
+            $controller = new Controller(
+                $app['supervisor.processes']
+            );
+
+            $controller->setTwig($app['twig']);
             $controller->setRequest($app['request']);
             $controller->setSession($app['session']);
             $controller->setUrlGenerator($app['url_generator']);
@@ -24,11 +28,6 @@ class Provider implements ControllerProviderInterface
             ->match('/', 'controller.home:homeAction')
             ->method('GET')
             ->bind('home');
-
-        $controllers
-            ->match('/ui/sidebar', 'controller.home:sidebarAction')
-            ->method('GET')
-            ->bind('sidebar');
 
         $controllers
             ->match('/servers/{serverName}', 'controller.home:serversAction')

@@ -3,15 +3,17 @@
 namespace Supervisorg\Domain\Iterators;
 
 use Supervisorg\Domain\Process;
+use Supervisorg\Domain\ProcessCollection;
+use Supervisorg\Domain\Collection;
 
-class ApplicationFilterIterator extends \FilterIterator
+class ApplicationFilterIterator extends \FilterIterator implements Collection
 {
     private
         $application;
 
-    public function __construct(\Iterator $iterator, $application)
+    public function __construct(ProcessCollection $collection, $application)
     {
-        parent::__construct($iterator);
+        parent::__construct(new \IteratorIterator($collection));
 
         $this->application = $application;
     }
@@ -29,5 +31,10 @@ class ApplicationFilterIterator extends \FilterIterator
         }
 
         return false;
+    }
+
+    public function count()
+    {
+        return iterator_count($this);
     }
 }

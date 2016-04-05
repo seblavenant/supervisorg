@@ -6,13 +6,14 @@ use Silex\ServiceProviderInterface;
 use Silex\Application;
 use Supervisorg\Services\Processes\FilterCollection;
 use Supervisorg\Domain\Server;
+use Supervisorg\Domain\ServerCollection;
 
 class Provider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
         $app['supervisor.servers'] = $app->share(function($c) {
-            $servers = [];
+            $collection = new ServerCollection();
 
             foreach($c['configuration']->readRequired('supervisor/servers', []) as $serverConfiguration)
             {
@@ -26,10 +27,10 @@ class Provider implements ServiceProviderInterface
                     $c['configuration']
                 );
 
-                $servers[$hostname] = $server;
+                $collection->add($server);
             }
 
-            return $servers;
+            return $collection;
         });
 
         $app['supervisor.client.factory'] = $app->protect(function($host) {

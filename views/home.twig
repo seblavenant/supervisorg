@@ -13,12 +13,7 @@
 
 {% block pageTitle %}
     {{title}}
-    <small>
-    {% if nbProcesses is defined %}
-        {{ nbProcesses }}
-    {% else %}
-        {{ processes|length }}
-    {% endif %} processes</small>
+    <small>{{ processes|length }} processes</small>
 {% endblock %}
 
 {% block body %}
