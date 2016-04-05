@@ -7,6 +7,7 @@ use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Supervisorg\Services\ProcessCollectionProvider;
 use Spear\Silex\Provider\Traits\TwigAware;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Controller
 {
@@ -62,7 +63,7 @@ class Controller
             $this->addErrorFlash($e->getMessage());
         }
 
-        return $this->redirect('home');
+        return $this->redirectToReferer();
     }
 
     public function startProcessAction($serverName, $processName)
@@ -77,6 +78,22 @@ class Controller
             $this->addErrorFlash($e->getMessage());
         }
 
-        return $this->redirect('home');
+        return $this->redirectToReferer();
+    }
+
+    private function redirectToReferer($defaultPath = 'home', array $defaultParameters = [])
+    {
+        $referer = null;
+
+        if($this->request->headers->has('referer'))
+        {
+            // FIXME better to save route in sessions ?
+            // quid with ajax requests ?
+            $referer = $this->request->headers->get('referer');
+
+            return new RedirectResponse($referer);
+        }
+
+        return $this->redirect($defaultPath, $defaultParameters);
     }
 }
