@@ -6,7 +6,7 @@ dumper:
         vendor/twbs/bootstrap/fonts: fonts
         vendor/fortawesome/font-awesome/fonts: fonts
         vendor/almasaeed2010/adminlte/dist/img: img
-        vendor/niktux/adminlte/assets/img: img/lib
+        vendor/silex-spear/adminlte/assets/img: img/lib
     files:
         # Examples :
         # vendor/select2/select2/select2.css: css
