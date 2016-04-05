@@ -37,8 +37,9 @@ class Controller
 
     public function serversAction($serverName)
     {
-        return $this->render('home.twig', [
+        return $this->render('pages/servers.twig', [
             'title' => $serverName,
+            'currentServer' => $this->request->attributes->get('serverName', null),
             'processes' => $this->processCollectionProvider->findByServerName($serverName),
         ]);
     }
@@ -77,6 +78,20 @@ class Controller
         {
             $this->addErrorFlash($e->getMessage());
         }
+
+        return $this->redirectToReferer();
+    }
+
+    public function serverStartAllAction($serverName)
+    {
+        $this->processCollectionProvider->startAllByServerName($serverName);
+
+        return $this->redirectToReferer();
+    }
+
+    public function serverStopAllAction($serverName)
+    {
+        $this->processCollectionProvider->stopAllByServerName($serverName);
 
         return $this->redirectToReferer();
     }

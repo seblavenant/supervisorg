@@ -1,4 +1,5 @@
 {% extends 'admin/common/body.twig' %}
+{% import 'macros.twig' as macros %}
 
 {% block title %}Supervisorg{% endblock %}
 {% block skin %}skin-blue{% endblock %}
@@ -14,6 +15,7 @@
 {% block pageTitle %}
     {{title}}
     <small>{{ processes|length }} process{% if processes|length > 1 %}es{% endif %}</small>
+    {% block controlPanel %}{% endblock %}
 {% endblock %}
 
 {% block body %}

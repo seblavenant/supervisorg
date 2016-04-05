@@ -84,4 +84,41 @@ class ProcessCollectionProvider
             throw new \RuntimeException("Error while trying to stop process $processName onto server $serverName");
         }
     }
+
+    public function startAllByServerName($serverName)
+    {
+        $server = $this->servers->getByName($serverName);
+        $server->startAll();
+    }
+
+    public function stopAllByServerName($serverName)
+    {
+        $server = $this->servers->getByName($serverName);
+        $server->stopAll();
+    }
+
+    public function startAll(Collection $processes)
+    {
+        $processesByServer = [];
+
+        foreach($processes as $process)
+        {
+            $server = $process->getServer();
+            if(! isset($processesByServer[$server->getName()]))
+            {
+                $processesByServer[$server->getName()] = [
+                    'server' => $server,
+                    'processes' => []
+                ];
+            }
+
+            $processesByServer[$server->getName()]['processes'][] = $process->getName();
+        }
+
+        foreach($processesByServer as $serverInfo)
+        {
+            $server = $serverInfo['server'];
+            $server->startProcess($serverInfo['processes']);
+        }
+    }
 }

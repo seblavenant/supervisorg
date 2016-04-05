@@ -35,4 +35,14 @@ class CachedClient implements Client
     {
         return $this->client->startProcess($process);
     }
+
+    public function startAll()
+    {
+        return $this->client->startAll();
+    }
+
+    public function stopAll()
+    {
+        return $this->client->stopAll();
+    }
 }

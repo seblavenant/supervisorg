@@ -1,3 +1,6 @@
 #!/bin/sh
-vendor/bin/lessc assets/less/build.less assets/compiled/main.css
+
 vendor/bin/lessc-adminlte
+
+echo "Application ..."
+vendor/bin/lessc assets/less/build.less assets/compiled/main.css

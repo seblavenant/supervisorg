@@ -27,14 +27,24 @@ class Server
         return $this->name;
     }
 
+    public function startProcess($process)
+    {
+        return $this->client->startProcess($process);
+    }
+
     public function stopProcess($process)
     {
         return $this->client->stopProcess($process);
     }
 
-    public function startProcess($process)
+    public function startAll()
     {
-        return $this->client->startProcess($process);
+        return $this->client->startAll();
+    }
+
+    public function stopAll()
+    {
+        return $this->client->stopAll();
     }
 
     /**
