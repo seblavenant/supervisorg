@@ -3,159 +3,97 @@
 namespace Supervisorg\Controllers\Home;
 
 use Spear\Silex\Application\Traits;
-use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
-use Supervisorg\Constants\ProcessState;
-use Puzzle\Configuration;
-use Supervisorg\Services\ApplicationFilterIterator;
+use Supervisorg\Services\ProcessCollectionProvider;
+use Spear\Silex\Provider\Traits\TwigAware;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Controller
 {
     use
+        TwigAware,
         Traits\RequestAware,
         Traits\SessionAware,
         Traits\UrlGeneratorAware,
         LoggerAwareTrait;
 
     private
-        $applications,
-        $twig,
-        $servers;
+        $processCollectionProvider;
 
-    public function __construct(\Twig_Environment $twig, array $servers, Configuration $config)
+    public function __construct(ProcessCollectionProvider $processCollectionProvider)
     {
-        $this->twig = $twig;
-        $this->servers = $servers;
-
+        $this->processCollectionProvider = $processCollectionProvider;
         $this->logger = new NullLogger();
-
-        $this->applications = $this->populateApplications($config);
-    }
-
-    private function populateApplications(Configuration $config)
-    {
-        if($config->read('process/applications/enabled', false))
-        {
-            $apps = [];
-
-            foreach($this->servers as $server)
-            {
-                $apps = array_merge($apps, $server->extractApplicationList());
-            }
-
-            $apps = array_unique($apps);
-
-            return $apps;
-        }
-
-        return false;
     }
 
     public function homeAction()
     {
-        $processes = [];
-        foreach($this->servers as $server)
-        {
-            $processes = array_merge($processes, $server->getProcessList());
-        }
-
-        return $this->twig->render('home.twig', [
-            'servers' => $this->servers,
-            'apps' => $this->applications,
-            'processes' => $processes,
+        return $this->render('home.twig', [
+            'title' => 'All processes',
+            'processes' => $this->processCollectionProvider->findAll(),
         ]);
     }
 
     public function serversAction($serverName)
     {
-        $server = $this->servers[$serverName];
-
-        return $this->twig->render('home.twig', [
-            'servers' => $this->servers,
-            'apps' => $this->applications,
-            'processes' => $server->getProcessList(),
+        return $this->render('home.twig', [
+            'title' => $serverName,
+            'processes' => $this->processCollectionProvider->findByServerName($serverName),
         ]);
     }
 
     public function applicationsAction($applicationName)
     {
-        $processes = [];
-        foreach($this->servers as $server)
-        {
-            $processes = array_merge($processes, $server->getProcessList());
-        }
-
-        $processes = new ApplicationFilterIterator(
-            new \ArrayIterator($processes),
-            $applicationName
-        );
-
-        return $this->twig->render('home.twig', [
-            'servers' => $this->servers,
-            'apps' => $this->applications,
-            'processes' => $processes,
+        return $this->render('home.twig', [
+            'title' => "$applicationName",
+            'processes' => $this->processCollectionProvider->findByApplicationName($applicationName),
         ]);
     }
 
     public function stopProcessAction($serverName, $processName)
     {
-        if(empty($processName))
+        try
         {
-            $this->addErrorFlash('Empty process name !');
-
-            return $this->redirect('home');
+            $this->processCollectionProvider->stopProcess($serverName, $processName);
+            $this->addInfoFlash(sprintf('Process <b>%s</b> stopping on server <b>%s</b>', $processName, $serverName));
+        }
+        catch(\Exception $e)
+        {
+            $this->addErrorFlash($e->getMessage());
         }
 
-        if( ! array_key_exists($serverName, $this->servers))
-        {
-            $this->addErrorFlash('Error while trying to stop process.');
-
-            return $this->redirect('home');
-        }
-
-        $return = $this->servers[$serverName]->stopProcess($processName);
-
-        if(! $return)
-        {
-            $this->addErrorFlash('Error while trying to stop process.');
-
-            return $this->redirect('home');
-        }
-
-        $this->addInfoFlash(sprintf('Process %s stopping', $processName));
-
-        return $this->redirect('home');
+        return $this->redirectToReferer();
     }
 
     public function startProcessAction($serverName, $processName)
     {
-        if(empty($processName))
+        try
         {
-            $this->addErrorFlash('Empty process name !');
-
-            return $this->redirect('home');
+            $this->processCollectionProvider->startProcess($serverName, $processName);
+            $this->addInfoFlash(sprintf('Process <b>%s</b> starting on server <b>%s</b>', $processName, $serverName));
+        }
+        catch(\Exception $e)
+        {
+            $this->addErrorFlash($e->getMessage());
         }
 
-        if( ! array_key_exists($serverName, $this->servers))
-        {
-            $this->addErrorFlash('Error while trying to stop process.');
+        return $this->redirectToReferer();
+    }
 
-            return $this->redirect('home');
+    private function redirectToReferer($defaultPath = 'home', array $defaultParameters = [])
+    {
+        $referer = null;
+
+        if($this->request->headers->has('referer'))
+        {
+            // FIXME better to save route in sessions ?
+            // quid with ajax requests ?
+            $referer = $this->request->headers->get('referer');
+
+            return new RedirectResponse($referer);
         }
 
-        $server = $this->servers[$serverName];
-        $return = $server->startProcess($processName);
-
-        if(! $return)
-        {
-            $this->addErrorFlash('Error while trying to start process.');
-
-            return $this->redirect('home');
-        }
-
-        $this->addInfoFlash(sprintf('Process %s starting', $processName));
-
-        return $this->redirect('home');
+        return $this->redirect($defaultPath, $defaultParameters);
     }
 }

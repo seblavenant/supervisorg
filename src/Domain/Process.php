@@ -1,6 +1,6 @@
 <?php
 
-namespace Supervisorg\Services\XmlRPC;
+namespace Supervisorg\Domain;
 
 use Puzzle\Configuration;
 

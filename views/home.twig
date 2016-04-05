@@ -8,13 +8,21 @@
 {% endblock %}
 
 {% block sidebar %}
-    {% include 'sidebar.twig' %}
+    {{ render(url('sidebar')) }}
+{% endblock %}
+
+{% block pageTitle %}
+    {{title}}
+    <small>{{ processes|length }} process{% if processes|length > 1 %}es{% endif %}</small>
 {% endblock %}
 
 {% block body %}
+    {% include 'common/alerts.twig' %}
+    <div class="row">
     {% for process in processes %}
         {% embed 'partials/process_tile.twig' %}{% endembed %}
     {% endfor %}
+    </div>
 {% endblock %}
 
 

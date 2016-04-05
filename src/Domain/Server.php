@@ -1,8 +1,9 @@
 <?php
 
-namespace Supervisorg\Services\XmlRPC;
+namespace Supervisorg\Domain;
 
-use Supervisorg\Services\Process\Filter;
+use Supervisorg\Services\Processes\Filter;
+use Supervisorg\Services\XmlRPC\Client;
 use Puzzle\Configuration;
 
 class Server
@@ -36,6 +37,9 @@ class Server
         return $this->client->startProcess($process);
     }
 
+    /**
+     * @return \Supervisorg\Domain\ProcessCollection
+     */
     public function getProcessList()
     {
         $processList = $this->client->getProcessList();
@@ -47,7 +51,9 @@ class Server
             $processes[] = new Process($processInfo, $this->config);
         }
 
-        return $this->filter->filter($processes);
+        $processes = $this->filter->filter($processes);
+
+        return new ProcessCollection($processes);
     }
 
     public function extractApplicationList()

@@ -1,9 +1,9 @@
 <?php
 
-namespace Supervisorg\Services\Process\Filters;
+namespace Supervisorg\Services\Processes\Filters;
 
-use Supervisorg\Services\Process\Filter;
-use Supervisorg\Services\XmlRPC\Process;
+use Supervisorg\Services\Processes\Filter;
+use Supervisorg\Domain\Process;
 
 // FIXME : add unit tests
 class Name implements Filter
