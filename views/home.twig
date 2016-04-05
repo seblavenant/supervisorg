@@ -13,7 +13,7 @@
 
 {% block pageTitle %}
     {{title}}
-    <small>{{ processes|length }} processes</small>
+    <small>{{ processes|length }} process{% if processes|length > 1 %}es{% endif %}</small>
 {% endblock %}
 
 {% block body %}
