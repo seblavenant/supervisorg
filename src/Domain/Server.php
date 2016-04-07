@@ -37,16 +37,6 @@ class Server
         return $this->client->stopProcess($processName);
     }
 
-    public function startAll()
-    {
-        return $this->client->startAll();
-    }
-
-    public function stopAll()
-    {
-        return $this->client->stopAll();
-    }
-
     /**
      * @return \Supervisorg\Domain\ProcessCollection
      */

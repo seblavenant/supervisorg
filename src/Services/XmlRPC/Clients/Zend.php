@@ -33,14 +33,4 @@ class Zend implements Client
     {
         return $this->client->call('supervisor.readProcessStderrLog', array($process, -1000, 0));
     }
-
-    public function startAll()
-    {
-        return $this->client->call('supervisor.startAllProcesses');
-    }
-
-    public function stopAll()
-    {
-        return $this->client->call('supervisor.stopAllProcesses');
-    }
 }

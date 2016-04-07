@@ -9,8 +9,4 @@ interface Client
     public function startProcess($processName);
 
     public function stopProcess($processName);
-
-    public function startAll();
-
-    public function stopAll();
 }
