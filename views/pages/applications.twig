@@ -1,0 +1,10 @@
+{% extends 'home.twig' %}
+
+{% block mainTitle %}{{ currentApplication }}{% endblock %}
+
+{% block controlPanel %}
+    {{ macros.controlPanel(
+        path('process.application.startAll', {'applicationName': currentApplication}),
+        path('process.application.stopAll', {'applicationName': currentApplication})
+    ) }}
+{% endblock %}

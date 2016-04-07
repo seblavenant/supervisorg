@@ -26,13 +26,46 @@ class Amqp implements AsynchronousRunner
         $this->client->publish($this->exchange, $message);
     }
 
+    public function start($serverName, $processName)
+    {
+        return $this->startStop($serverName, $processName, 'start');
+    }
+
+    public function stop($serverName, $processName)
+    {
+        return $this->startStop($serverName, $processName, 'stop');
+    }
+
+    public function startStop($serverName, $processName, $action)
+    {
+        $message = new Json('process.control.' . $action);
+        $message->setBody([
+            'action' => $action,
+            'server' => $serverName,
+            'process' => $processName,
+        ]);
+
+        $this->send($message);
+    }
+
     public function startAll($serverName, Collection $processes)
+    {
+        return $this->startStopAll($serverName, $processes, 'start');
+    }
+
+    public function stopAll($serverName, Collection $processes)
+    {
+        return $this->startStopAll($serverName, $processes, 'stop');
+    }
+
+    public function startStopAll($serverName, Collection $processes, $action)
     {
         $names = $this->collectionToArrayOfProcessNames($processes);
         if(! empty($names))
         {
-            $message = new Json('startAll');
+            $message = new Json('process.control.all');
             $message->setBody([
+                'action' => $action,
                 'server' => $serverName,
                 'processes' => $names,
             ]);
@@ -49,7 +82,7 @@ class Amqp implements AsynchronousRunner
         {
             if($process instanceof Process)
             {
-                $names[] = $process->getName();
+                $names[] = $process->getFullName();
             }
         }
 

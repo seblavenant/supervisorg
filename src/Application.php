@@ -21,6 +21,7 @@ class Application extends AbstractApplication
         $this->register(new HttpFragmentServiceProvider());
         $this->register(new Provider\AsseticServiceProvider());
         $this->register(new Services\Provider());
+        $this->register(new Workers\Provider());
         $this->register(new \Spear\AdminLTE\Provider());
         $this->register(new AmqpServiceProvider());
     }

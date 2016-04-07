@@ -13,8 +13,10 @@
 {% endblock %}
 
 {% block pageTitle %}
-    {{title}}
-    <small>{{ processes|length }} process{% if processes|length > 1 %}es{% endif %}</small>
+    {% block mainTitle %}{{title}}{% endblock %}
+    {% block subTitle %}
+        <small>{{ processes|length }} process{% if processes|length > 1 %}es{% endif %}</small>
+    {% endblock %}
     {% block controlPanel %}{% endblock %}
 {% endblock %}
 

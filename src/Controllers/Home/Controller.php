@@ -38,26 +38,25 @@ class Controller
     public function serversAction($serverName)
     {
         return $this->render('pages/servers.twig', [
-            'title' => $serverName,
-            'currentServer' => $this->request->attributes->get('serverName', null),
+            'currentServer' => $serverName,
             'processes' => $this->processCollectionProvider->findByServerName($serverName),
         ]);
     }
 
     public function applicationsAction($applicationName)
     {
-        return $this->render('home.twig', [
-            'title' => "$applicationName",
+        return $this->render('pages/applications.twig', [
+            'currentApplication' => $applicationName,
             'processes' => $this->processCollectionProvider->findByApplicationName($applicationName),
         ]);
     }
 
-    public function stopProcessAction($serverName, $processName)
+    public function startProcessAction($serverName, $processName)
     {
         try
         {
-            $this->processCollectionProvider->stopProcess($serverName, $processName);
-            $this->addInfoFlash(sprintf('Process <b>%s</b> stopping on server <b>%s</b>', $processName, $serverName));
+            $this->processCollectionProvider->startProcess($serverName, $processName);
+            $this->addInfoFlash(sprintf('Process <b>%s</b> starting on server <b>%s</b>', $processName, $serverName));
         }
         catch(\Exception $e)
         {
@@ -67,12 +66,12 @@ class Controller
         return $this->redirectToReferer();
     }
 
-    public function startProcessAction($serverName, $processName)
+    public function stopProcessAction($serverName, $processName)
     {
         try
         {
-            $this->processCollectionProvider->startProcess($serverName, $processName);
-            $this->addInfoFlash(sprintf('Process <b>%s</b> starting on server <b>%s</b>', $processName, $serverName));
+            $this->processCollectionProvider->stopProcess($serverName, $processName);
+            $this->addInfoFlash(sprintf('Process <b>%s</b> stopping on server <b>%s</b>', $processName, $serverName));
         }
         catch(\Exception $e)
         {
@@ -97,6 +96,35 @@ class Controller
     public function serverStopAllAction($serverName)
     {
         $this->processCollectionProvider->stopAllByServerName($serverName);
+
+        $this->addInfoFlash(sprintf(
+            'Processes onto server %s are stopping in background ...',
+            $serverName
+        ));
+
+        return $this->redirectToReferer();
+    }
+
+    public function applicationStartAllAction($applicationName)
+    {
+        $this->processCollectionProvider->startAllByApplicationName($applicationName);
+
+        $this->addInfoFlash(sprintf(
+            'Processes for application %s are starting in background ...',
+            $applicationName
+        ));
+
+        return $this->redirectToReferer();
+    }
+
+    public function applicationStopAllAction($applicationName)
+    {
+        $this->processCollectionProvider->stopAllByApplicationName($applicationName);
+
+        $this->addInfoFlash(sprintf(
+            'Processes for application %s are stopping in background ...',
+            $applicationName
+        ));
 
         return $this->redirectToReferer();
     }

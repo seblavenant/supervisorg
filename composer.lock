@@ -687,16 +687,16 @@
         },
         {
             "name": "puzzle/amqp",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/puzzle-org/amqp.git",
-                "reference": "6cc65f67777a3c1dc8ece154da1847a234d3d5bf"
+                "reference": "5904310ce594e90d97be1a2f8fb02b4ef96a9e95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/puzzle-org/amqp/zipball/6cc65f67777a3c1dc8ece154da1847a234d3d5bf",
-                "reference": "6cc65f67777a3c1dc8ece154da1847a234d3d5bf",
+                "url": "https://api.github.com/repos/puzzle-org/amqp/zipball/5904310ce594e90d97be1a2f8fb02b4ef96a9e95",
+                "reference": "5904310ce594e90d97be1a2f8fb02b4ef96a9e95",
                 "shasum": ""
             },
             "require": {
@@ -729,7 +729,7 @@
                 "aqmp",
                 "asynchronous"
             ],
-            "time": "2016-04-07 00:36:12"
+            "time": "2016-04-07 11:38:11"
         },
         {
             "name": "puzzle/configuration",

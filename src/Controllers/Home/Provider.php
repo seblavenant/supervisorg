@@ -67,6 +67,18 @@ class Provider implements ControllerProviderInterface
             ->method('GET')
             ->bind('process.server.stopAll');
 
+        $controllers
+            ->match('/applications/{applicationName}/process/startAll', 'controller.home:applicationStartAllAction')
+            ->assert('applicationName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('process.application.startAll');
+
+        $controllers
+            ->match('/applications/{applicationName}/process/stopAll', 'controller.home:applicationStopAllAction')
+            ->assert('applicationName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('process.application.stopAll');
+
         return $controllers;
     }
 }

@@ -29,6 +29,9 @@ services:
             - ./config/supervisor/supervisorg-workers.conf:/etc/supervisor/conf.d/server.conf
             - ../../:/var/www/supervisorg
         links:
+            - server-1
+            - server-2
+            - server-3
             - rabbitmq
         environment:
             - USER_ID=${USER_ID}

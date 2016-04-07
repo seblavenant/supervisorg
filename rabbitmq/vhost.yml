@@ -1,6 +1,6 @@
 /:
     parameters:
-        with_dl: true # If true, all queues will have a dl and the corresponding mapping with the exchange "dl"
+        with_dl: false # If true, all queues will have a dl and the corresponding mapping with the exchange "dl"
         with_unroutable: true # If true, all exchange will be declared with an unroutable config
         
     exchanges:
@@ -9,9 +9,19 @@
             durable: true
 
     queues:
-        startAll:
+        process_control:
             durable: true
             bindings:
                 - 
                     exchange: supervisorg
-                    routing_key: startAll
+                    routing_key: process.control.start
+                - 
+                    exchange: supervisorg
+                    routing_key: process.control.stop
+                    
+        process_control_all:
+            durable: true
+            bindings:
+                - 
+                    exchange: supervisorg
+                    routing_key: process.control.all

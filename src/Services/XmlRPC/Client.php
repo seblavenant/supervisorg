@@ -6,9 +6,9 @@ interface Client
 {
     public function getProcessList();
 
-    public function startProcess($process);
+    public function startProcess($processName);
 
-    public function stopProcess($process);
+    public function stopProcess($processName);
 
     public function startAll();
 

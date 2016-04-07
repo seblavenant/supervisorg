@@ -6,7 +6,7 @@
         "silex/silex" : "~1.2",
         "niktux/karma" : "~5.3",
         "puzzle/configuration" : "~1.7",
-        "puzzle/amqp" : "~1.0",
+        "puzzle/amqp" : "~1.0.3",
         "symfony/console" : "~2.6",
         "symfony/twig-bridge" : "~2.6",
         "lebris/muffin" : "~1.2",

@@ -97,11 +97,35 @@ class ProcessCollectionProvider
 
     public function stopAllByServerName($serverName)
     {
-        $server = $this->servers->getByName($serverName);
-        $server->stopAll();
+        $this->runner->stopAll(
+            $serverName,
+            $this->findByServerName($serverName)
+        );
     }
 
-    public function startAll(Collection $processes)
+    public function startAllByApplicationName($applicationName)
+    {
+        $processes = $this->findByApplicationName($applicationName);
+        $processesByServer = $this->groupProcessesByServer($processes);
+
+        foreach($processesByServer as $serverName => $processes)
+        {
+            $this->runner->startAll($serverName, $processes);
+        }
+    }
+
+    public function stopAllByApplicationName($applicationName)
+    {
+        $processes = $this->findByApplicationName($applicationName);
+        $processesByServer = $this->groupProcessesByServer($processes);
+
+        foreach($processesByServer as $serverName => $processes)
+        {
+            $this->runner->stopAll($serverName, $processes);
+        }
+    }
+
+    private function groupProcessesByServer(Collection $processes)
     {
         $processesByServer = [];
 
@@ -116,9 +140,6 @@ class ProcessCollectionProvider
             $processesByServer[$server->getName()]->add($process);
         }
 
-        foreach($processesByServer as $serverName => $processes)
-        {
-            $this->runner->startAll($serverName, $processes);
-        }
+        return $processesByServer;
     }
 }
