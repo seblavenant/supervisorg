@@ -1,4 +1,6 @@
-sourcePath: config/
+sourcePath:
+    - config/
+    - rabbitmq/
 formatters:
   yaml:
     <true>: "true"

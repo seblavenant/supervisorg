@@ -18,7 +18,10 @@ class Provider implements ServiceProviderInterface
         });
 
         $app['asynchronous.runner'] = $app->share(function($c) {
-            return new Amqp($c['amqp.client']);
+            return new Amqp(
+                $c['amqp.client'],
+                $c['configuration']->read('amqp/supervisorg/exchange', 'supervisorg')
+            );
         });
     }
 

@@ -4,24 +4,24 @@
         with_unroutable: true # If true, all exchange will be declared with an unroutable config
         
     exchanges:
-        supervisorg:
+        <%amqp.exchange%>:
             type: topic
             durable: true
 
     queues:
-        process_control:
+        <%amqp.queues.processControl%>:
             durable: true
             bindings:
                 - 
-                    exchange: supervisorg
+                    exchange: <%amqp.exchange%>
                     routing_key: process.control.start
                 - 
-                    exchange: supervisorg
+                    exchange: <%amqp.exchange%>
                     routing_key: process.control.stop
                     
-        process_control_all:
+        <%amqp.queues.processControlAll%>:
             durable: true
             bindings:
                 - 
-                    exchange: supervisorg
+                    exchange: <%amqp.exchange%>
                     routing_key: process.control.all

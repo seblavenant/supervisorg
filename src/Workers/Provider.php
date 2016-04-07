@@ -16,7 +16,7 @@ class Provider implements ServiceProviderInterface
                     return new ProcessControl($c['supervisor.servers']);
                 },
                 $c['amqp.consumers.simple'],
-                'process_control'
+                $c['configuration']->read('amqp/supervisorg/queues/processControl', 'process_control')
             );
 
             return $context;
@@ -28,7 +28,7 @@ class Provider implements ServiceProviderInterface
                     return new ProcessControlAll($c['asynchronous.runner']);
                 },
                 $c['amqp.consumers.simple'],
-                'process_control_all'
+                $c['configuration']->read('amqp/supervisorg/queues/processControlAll', 'process_control_all')
             );
 
             return $context;

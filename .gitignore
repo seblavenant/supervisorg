@@ -6,6 +6,7 @@ var/
 
 # Application hydrated configuration files
 config/*.yml
+rabbitmq/*.yml
 
 # less compilation target directory
 assets/compiled/
