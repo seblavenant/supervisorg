@@ -5,7 +5,8 @@ vendor/
 var/
 
 # Application hydrated configuration files
-config/*.yml
+config/built-in/*.yml
+config/local/
 rabbitmq/*.yml
 
 # less compilation target directory
