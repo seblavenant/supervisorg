@@ -16,5 +16,5 @@ $rootDir = realpath(__DIR__);
 
 $app = new Application($configuration, $rootDir);
 
-$console = new Console($app);
+$console = new Console\Console($app);
 $console->run();

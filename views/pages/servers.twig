@@ -1,0 +1,10 @@
+{% extends 'home.twig' %}
+
+{% block mainTitle %}{{ currentServer }}{% endblock %}
+
+{% block controlPanel %}
+    {{ macros.controlPanel(
+        path('process.server.startAll', {'serverName': currentServer}),
+        path('process.server.stopAll', {'serverName': currentServer})
+    ) }}
+{% endblock %}

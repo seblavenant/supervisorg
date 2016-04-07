@@ -15,9 +15,6 @@ class Provider implements ControllerProviderInterface
             );
 
             $controller->setTwig($app['twig']);
-            $controller->setRequest($app['request']);
-            $controller->setSession($app['session']);
-            $controller->setUrlGenerator($app['url_generator']);
 
             return $controller;
         };
@@ -40,20 +37,6 @@ class Provider implements ControllerProviderInterface
             ->assert('applicationName', '[\w-_.]+')
             ->method('GET')
             ->bind('applications');
-
-        $controllers
-            ->match('/servers/{serverName}/process/stop/{processName}', 'controller.home:stopProcessAction')
-            ->assert('serverName', '[\w-_.]+')
-            ->assert('processName', '[\w-_.]+')
-            ->method('GET')
-            ->bind('process.stop');
-
-        $controllers
-            ->match('/servers/{serverName}/process/start/{processName}', 'controller.home:startProcessAction')
-            ->assert('serverName', '[\w-_.]+')
-            ->assert('processName', '[\w-_.]+')
-            ->method('GET')
-            ->bind('process.start');
 
         return $controllers;
     }

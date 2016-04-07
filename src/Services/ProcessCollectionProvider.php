@@ -10,11 +10,13 @@ use Supervisorg\Domain\Collection;
 class ProcessCollectionProvider
 {
     private
-        $servers;
+        $servers,
+        $runner;
 
-    public function __construct(ServerCollection $servers)
+    public function __construct(ServerCollection $servers, AsynchronousRunner $runner)
     {
         $this->servers = $servers;
+        $this->runner = $runner;
     }
 
     /**
@@ -83,5 +85,87 @@ class ProcessCollectionProvider
         {
             throw new \RuntimeException("Error while trying to stop process $processName onto server $serverName");
         }
+    }
+
+    public function startAllByServerName($serverName)
+    {
+        $this->runner->startAll(
+            $serverName,
+            $this->findByServerName($serverName)
+        );
+    }
+
+    public function stopAllByServerName($serverName)
+    {
+        $this->runner->stopAll(
+            $serverName,
+            $this->findByServerName($serverName)
+        );
+    }
+
+    public function startAll()
+    {
+        return $this->startAllOntoDifferentServers(
+            $this->findAll()
+        );
+    }
+
+    public function stopAll()
+    {
+        return $this->stopAllOntoDifferentServers(
+            $this->findAll()
+        );
+    }
+
+    public function startAllByApplicationName($applicationName)
+    {
+        return $this->startAllOntoDifferentServers(
+            $this->findByApplicationName($applicationName)
+        );
+    }
+
+    public function stopAllByApplicationName($applicationName)
+    {
+        return $this->stopAllOntoDifferentServers(
+            $this->findByApplicationName($applicationName)
+        );
+    }
+
+    private function startAllOntoDifferentServers(Collection $processes)
+    {
+        $processesByServer = $this->groupProcessesByServer($processes);
+
+        foreach($processesByServer as $serverName => $processes)
+        {
+            $this->runner->startAll($serverName, $processes);
+        }
+    }
+
+    private function stopAllOntoDifferentServers(Collection $processes)
+    {
+        $processesByServer = $this->groupProcessesByServer($processes);
+
+        foreach($processesByServer as $serverName => $processes)
+        {
+            $this->runner->stopAll($serverName, $processes);
+        }
+    }
+
+    private function groupProcessesByServer(Collection $processes)
+    {
+        $processesByServer = [];
+
+        foreach($processes as $process)
+        {
+            $server = $process->getServer();
+            if(! isset($processesByServer[$server->getName()]))
+            {
+                $processesByServer[$server->getName()] = new ProcessCollection();
+            }
+
+            $processesByServer[$server->getName()]->add($process);
+        }
+
+        return $processesByServer;
     }
 }

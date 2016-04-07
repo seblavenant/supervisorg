@@ -26,13 +26,13 @@ class CachedClient implements Client
         return $this->cachedList;
     }
 
-    public function stopProcess($process)
+    public function startProcess($processName)
     {
-        return $this->client->stopProcess($process);
+        return $this->client->startProcess($processName);
     }
 
-    public function startProcess($process)
+    public function stopProcess($processName)
     {
-        return $this->client->startProcess($process);
+        return $this->client->stopProcess($processName);
     }
 }

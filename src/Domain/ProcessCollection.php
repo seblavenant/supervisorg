@@ -12,14 +12,32 @@ class ProcessCollection implements \IteratorAggregate, Collection
         $this->processes = $processes;
     }
 
-    public function add(ProcessCollection $collection)
+    public function add($mixed)
     {
-        foreach($collection as $process)
+        if($mixed instanceof ProcessCollection)
         {
-            $this->processes[] = $process;
+            return $this->addCollection($mixed);
+        }
+
+        if($mixed instanceof Process)
+        {
+            return $this->addProcess($mixed);
         }
 
         return $this;
+    }
+
+    private function addCollection(ProcessCollection $collection)
+    {
+        foreach($collection as $process)
+        {
+            $this->addProcess($process);
+        }
+    }
+
+    private function addProcess(Process $process)
+    {
+        $this->processes[] = $process;
     }
 
     public function getIterator()

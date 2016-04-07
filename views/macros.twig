@@ -1,0 +1,11 @@
+{% macro controlPanel(linkStartAll, linkStopAll) %}
+    <div class="btn-group" style="float:right;">
+        <a class="btn btn-app" href="{{ linkStartAll }}">
+            <i class="fa fa-play"></i> Start all
+        </a>
+        <a class="btn btn-app" href="{{ linkStopAll }}">
+            <i class="fa fa-stop"></i> Stop all
+        </a>
+    </div>
+    <div class="clearfix"></div>
+{% endmacro %}

@@ -1,0 +1,27 @@
+/:
+    parameters:
+        with_dl: false # If true, all queues will have a dl and the corresponding mapping with the exchange "dl"
+        with_unroutable: true # If true, all exchange will be declared with an unroutable config
+        
+    exchanges:
+        <%amqp.exchange%>:
+            type: topic
+            durable: true
+
+    queues:
+        <%amqp.queues.processControl%>:
+            durable: true
+            bindings:
+                - 
+                    exchange: <%amqp.exchange%>
+                    routing_key: process.control.start
+                - 
+                    exchange: <%amqp.exchange%>
+                    routing_key: process.control.stop
+                    
+        <%amqp.queues.processControlAll%>:
+            durable: true
+            bindings:
+                - 
+                    exchange: <%amqp.exchange%>
+                    routing_key: process.control.all

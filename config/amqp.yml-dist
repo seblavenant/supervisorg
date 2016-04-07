@@ -1,0 +1,11 @@
+broker:
+    host: <%amqp.broker.host%>
+    login: <%amqp.broker.login%>
+    password: <%amqp.broker.password%>
+    vhost: <%amqp.broker.vhost%>
+    
+supervisorg:
+    exchange: <%amqp.exchange%>
+    queues:
+      processControl: <%amqp.queues.processControl%>
+      processControlAll: <%amqp.queues.processControlAll%>

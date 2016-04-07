@@ -19,14 +19,14 @@ class Zend implements Client
         return $this->client->call('supervisor.getAllProcessInfo');
     }
 
-    public function stopProcess($process)
+    public function startProcess($processName)
     {
-        return $this->client->call('supervisor.stopProcess', [$process]);
+        return $this->client->call('supervisor.startProcess', [$processName]);
     }
 
-    public function startProcess($process)
+    public function stopProcess($processName)
     {
-        return $this->client->call('supervisor.startProcess', [$process]);
+        return $this->client->call('supervisor.stopProcess', [$processName]);
     }
 
     public function readStdErr($process)
