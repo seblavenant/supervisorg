@@ -10,11 +10,13 @@ use Supervisorg\Domain\Collection;
 class ProcessCollectionProvider
 {
     private
-        $servers;
+        $servers,
+        $runner;
 
-    public function __construct(ServerCollection $servers)
+    public function __construct(ServerCollection $servers, AsynchronousRunner $runner)
     {
         $this->servers = $servers;
+        $this->runner = $runner;
     }
 
     /**
@@ -87,8 +89,10 @@ class ProcessCollectionProvider
 
     public function startAllByServerName($serverName)
     {
-        $server = $this->servers->getByName($serverName);
-        $server->startAll();
+        $this->runner->startAll(
+            $serverName,
+            $this->findByServerName($serverName)
+        );
     }
 
     public function stopAllByServerName($serverName)
@@ -106,19 +110,15 @@ class ProcessCollectionProvider
             $server = $process->getServer();
             if(! isset($processesByServer[$server->getName()]))
             {
-                $processesByServer[$server->getName()] = [
-                    'server' => $server,
-                    'processes' => []
-                ];
+                $processesByServer[$server->getName()] = new ProcessCollection();
             }
 
-            $processesByServer[$server->getName()]['processes'][] = $process->getName();
+            $processesByServer[$server->getName()]->add($process);
         }
 
-        foreach($processesByServer as $serverInfo)
+        foreach($processesByServer as $serverName => $processes)
         {
-            $server = $serverInfo['server'];
-            $server->startProcess($serverInfo['processes']);
+            $this->runner->startAll($serverName, $processes);
         }
     }
 }

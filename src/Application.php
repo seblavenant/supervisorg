@@ -9,6 +9,7 @@ use Spear\Silex\Provider;
 use Puzzle\Configuration;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
+use Puzzle\AMQP\Silex\AmqpServiceProvider;
 
 class Application extends AbstractApplication
 {
@@ -21,6 +22,7 @@ class Application extends AbstractApplication
         $this->register(new Provider\AsseticServiceProvider());
         $this->register(new Services\Provider());
         $this->register(new \Spear\AdminLTE\Provider());
+        $this->register(new AmqpServiceProvider());
     }
 
     protected function initializeServices()

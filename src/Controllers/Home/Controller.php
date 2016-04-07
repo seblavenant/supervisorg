@@ -86,6 +86,11 @@ class Controller
     {
         $this->processCollectionProvider->startAllByServerName($serverName);
 
+        $this->addInfoFlash(sprintf(
+            'Processes onto server %s are starting in background ...',
+            $serverName
+        ));
+
         return $this->redirectToReferer();
     }
 

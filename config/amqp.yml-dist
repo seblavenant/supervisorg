@@ -1,0 +1,5 @@
+broker:
+    host: <%amqp.broker.host%>
+    login: <%amqp.broker.login%>
+    password: <%amqp.broker.password%>
+    vhost: <%amqp.broker.vhost%>
