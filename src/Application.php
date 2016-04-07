@@ -41,6 +41,7 @@ class Application extends AbstractApplication
     protected function mountControllerProviders()
     {
         $this->mount('/', new Controllers\Home\Provider());
+        $this->mount('/', new Controllers\ProcessControl\Provider());
         $this->mount('/ui', new Controllers\UI\Provider());
     }
 }

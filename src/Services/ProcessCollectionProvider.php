@@ -103,9 +103,36 @@ class ProcessCollectionProvider
         );
     }
 
+    public function startAll()
+    {
+        return $this->startAllOntoDifferentServers(
+            $this->findAll()
+        );
+    }
+
+    public function stopAll()
+    {
+        return $this->stopAllOntoDifferentServers(
+            $this->findAll()
+        );
+    }
+
     public function startAllByApplicationName($applicationName)
     {
-        $processes = $this->findByApplicationName($applicationName);
+        return $this->startAllOntoDifferentServers(
+            $this->findByApplicationName($applicationName)
+        );
+    }
+
+    public function stopAllByApplicationName($applicationName)
+    {
+        return $this->stopAllOntoDifferentServers(
+            $this->findByApplicationName($applicationName)
+        );
+    }
+
+    private function startAllOntoDifferentServers(Collection $processes)
+    {
         $processesByServer = $this->groupProcessesByServer($processes);
 
         foreach($processesByServer as $serverName => $processes)
@@ -114,9 +141,8 @@ class ProcessCollectionProvider
         }
     }
 
-    public function stopAllByApplicationName($applicationName)
+    private function stopAllOntoDifferentServers(Collection $processes)
     {
-        $processes = $this->findByApplicationName($applicationName);
         $processesByServer = $this->groupProcessesByServer($processes);
 
         foreach($processesByServer as $serverName => $processes)
