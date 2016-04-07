@@ -14,6 +14,21 @@ services:
             - server-1
             - server-2
             - server-3
+            - workers
+            - rabbitmq
+        environment:
+            - USER_ID=${USER_ID}
+            - GROUP_ID=${GROUP_ID}
+
+    workers:
+        build: ./images/workers
+        image: supervisorg/demo/workers
+        container_name: supervisorg-demo-workers
+        volumes:
+            - ./config/apache2/vhost.conf:/etc/apache2/sites-enabled/vhost.conf
+            - ./config/supervisor/supervisorg-workers.conf:/etc/supervisor/conf.d/server.conf
+            - ../../:/var/www/supervisorg
+        links:
             - rabbitmq
         environment:
             - USER_ID=${USER_ID}
