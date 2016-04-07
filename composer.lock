@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d1cdf568a9c780f89b3fdb84ea1abe8b",
-    "content-hash": "fbec52893105915c61b014b3acb14784",
+    "hash": "b31685382dccc98b6aa111a840427cc0",
+    "content-hash": "3303b775d59d17f365191d0468d67460",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -496,6 +496,50 @@
             "time": "2015-12-04 15:29:26"
         },
         {
+            "name": "odolbeau/rabbit-mq-admin-toolkit",
+            "version": "v3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/odolbeau/rabbit-mq-admin-toolkit.git",
+                "reference": "6d3a6b5689879b50fd7b220ef5f10f9cb09492aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/odolbeau/rabbit-mq-admin-toolkit/zipball/6d3a6b5689879b50fd7b220ef5f10f9cb09492aa",
+                "reference": "6d3a6b5689879b50fd7b220ef5f10f9cb09492aa",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.4|~7.0",
+                "swarrot/swarrot": "~2.0",
+                "symfony/console": "~2.4",
+                "symfony/yaml": "~2.4"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "~1.4"
+            },
+            "bin": [
+                "rabbit"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Bab\\RabbitMq": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "RabbitMQ administration toolkit",
+            "time": "2015-12-29 13:00:03"
+        },
+        {
             "name": "oyejorge/less.php",
             "version": "v1.7.0.10",
             "source": {
@@ -643,16 +687,16 @@
         },
         {
             "name": "puzzle/amqp",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/puzzle-org/amqp.git",
-                "reference": "3b36e15fe747c0645971f1a2f362293b88d28a02"
+                "reference": "6cc65f67777a3c1dc8ece154da1847a234d3d5bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/puzzle-org/amqp/zipball/3b36e15fe747c0645971f1a2f362293b88d28a02",
-                "reference": "3b36e15fe747c0645971f1a2f362293b88d28a02",
+                "url": "https://api.github.com/repos/puzzle-org/amqp/zipball/6cc65f67777a3c1dc8ece154da1847a234d3d5bf",
+                "reference": "6cc65f67777a3c1dc8ece154da1847a234d3d5bf",
                 "shasum": ""
             },
             "require": {
@@ -685,7 +729,7 @@
                 "aqmp",
                 "asynchronous"
             ],
-            "time": "2016-04-06 23:44:37"
+            "time": "2016-04-07 00:36:12"
         },
         {
             "name": "puzzle/configuration",

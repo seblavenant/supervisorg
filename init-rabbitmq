@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# For local testing and documentation, will be removed later 
+# Yeah I know, there is my docker ip over there (unhappy ? open an issue and submit a PR \o/ )
+vendor/bin/rabbit vhost:mapping:create -H 192.168.86.55 --port=666 -p guest rabbitmq/vhost.yml
