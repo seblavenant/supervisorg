@@ -33,10 +33,11 @@ class Provider implements ControllerProviderInterface
             ->bind('servers');
 
         $controllers
-            ->match('/applications/{applicationName}', 'controller.home:applicationsAction')
-            ->assert('applicationName', '[\w-_.]+')
+            ->match('/logical-groups/{logicalGroupName}/{logicalGroupValue}', 'controller.home:logicalGroupsAction')
+            ->assert('logicalGroupName', '[\w-_.]+')
+            ->assert('logicalGroupValue', '[\w-_.]+')
             ->method('GET')
-            ->bind('applications');
+            ->bind('logicalGroups');
 
         return $controllers;
     }

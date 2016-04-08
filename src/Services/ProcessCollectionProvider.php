@@ -4,18 +4,21 @@ namespace Supervisorg\Services;
 
 use Supervisorg\Domain\ServerCollection;
 use Supervisorg\Domain\ProcessCollection;
-use Supervisorg\Domain\Iterators\ApplicationFilterIterator;
 use Supervisorg\Domain\Collection;
+use Supervisorg\Domain\Iterators\LogicalGroupFilterIterator;
+use Supervisorg\Domain\LogicalGroupCollection;
 
 class ProcessCollectionProvider
 {
     private
         $servers,
+        $logicalGroups,
         $runner;
 
-    public function __construct(ServerCollection $servers, AsynchronousRunner $runner)
+    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups, AsynchronousRunner $runner)
     {
         $this->servers = $servers;
+        $this->logicalGroups = $logicalGroups;
         $this->runner = $runner;
     }
 
@@ -47,11 +50,12 @@ class ProcessCollectionProvider
     /**
      * @return Collection
      */
-    public function findByApplicationName($applicationName)
+    public function findByLogicalGroup($logicalGroupName, $logicalGroupValue)
     {
-        return new ApplicationFilterIterator(
+        return new LogicalGroupFilterIterator(
             $this->findAll(),
-            $applicationName
+            $this->logicalGroups->getByName($logicalGroupName),
+            $logicalGroupValue
         );
     }
 
@@ -117,17 +121,17 @@ class ProcessCollectionProvider
         );
     }
 
-    public function startAllByApplicationName($applicationName)
+    public function startAllByLogicalGroup($logicalGroupName, $logicalGroupValue)
     {
         return $this->startAllOntoDifferentServers(
-            $this->findByApplicationName($applicationName)
+            $this->findByLogicalGroup($logicalGroupName, $logicalGroupValue)
         );
     }
 
-    public function stopAllByApplicationName($applicationName)
+    public function stopAllByLogicalGroup($logicalGroupName, $logicalGroupValue)
     {
         return $this->stopAllOntoDifferentServers(
-            $this->findByApplicationName($applicationName)
+            $this->findByLogicalGroup($logicalGroupName, $logicalGroupValue)
         );
     }
 

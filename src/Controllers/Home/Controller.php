@@ -34,11 +34,12 @@ class Controller
         ]);
     }
 
-    public function applicationsAction($applicationName)
+    public function logicalGroupsAction($logicalGroupName, $logicalGroupValue)
     {
-        return $this->render('pages/applications.twig', [
-            'currentApplication' => $applicationName,
-            'processes' => $this->processCollectionProvider->findByApplicationName($applicationName),
+        return $this->render('pages/logicalGroup.twig', [
+            'currentLogicalGroupName' => $logicalGroupName,
+            'currentLogicalGroupValue' => $logicalGroupValue,
+            'processes' => $this->processCollectionProvider->findByLogicalGroup($logicalGroupName, $logicalGroupValue),
         ]);
     }
 }

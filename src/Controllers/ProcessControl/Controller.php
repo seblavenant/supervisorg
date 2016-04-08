@@ -97,25 +97,27 @@ class Controller
         return $this->redirectToReferer();
     }
 
-    public function applicationStartAllAction($applicationName)
+    public function logicalGroupStartAllAction($logicalGroupName, $logicalGroupValue)
     {
-        $this->processCollectionProvider->startAllByApplicationName($applicationName);
+        $this->processCollectionProvider->startAllByLogicalGroup($logicalGroupName, $logicalGroupValue);
 
         $this->addInfoFlash(sprintf(
-            'Processes for application %s are starting in background ...',
-            $applicationName
+            'Processes for logical group %s/%s are starting in background ...',
+            $logicalGroupName,
+            $logicalGroupValue
         ));
 
         return $this->redirectToReferer();
     }
 
-    public function applicationStopAllAction($applicationName)
+    public function logicalGroupStopAllAction($logicalGroupName, $logicalGroupValue)
     {
-        $this->processCollectionProvider->stopAllByApplicationName($applicationName);
+        $this->processCollectionProvider->stopAllByLogicalGroup($logicalGroupName, $logicalGroupValue);
 
         $this->addInfoFlash(sprintf(
-            'Processes for application %s are stopping in background ...',
-            $applicationName
+            'Processes for logical group %s/%s are stopping in background ...',
+            $logicalGroupName,
+            $logicalGroupValue
         ));
 
         return $this->redirectToReferer();

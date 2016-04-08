@@ -38,7 +38,7 @@ class ProcessControl implements Worker
             }
             elseif($action === 'stop')
             {
-                $return = $server->stopProcess($processName);
+                $server->stopProcess($processName);
             }
         }
         catch(\Exception $e)

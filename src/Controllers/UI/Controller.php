@@ -5,9 +5,9 @@ namespace Supervisorg\Controllers\UI;
 use Spear\Silex\Application\Traits;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
-use Puzzle\Configuration;
 use Supervisorg\Domain\ServerCollection;
 use Spear\Silex\Provider\Traits\TwigAware;
+use Supervisorg\Domain\LogicalGroupCollection;
 
 class Controller
 {
@@ -18,41 +18,49 @@ class Controller
 
     private
         $servers,
-        $configuration;
+        $logicalGroups;
 
-    public function __construct(ServerCollection $servers, Configuration $configuration)
+    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups)
     {
         $this->servers = $servers;
-        $this->configuration = $configuration;
+        $this->logicalGroups = $logicalGroups;
         $this->logger = new NullLogger();
     }
 
-    private function retrieveApplications(Configuration $config)
+    private function retrieveLogicalGroupsAndValues()
     {
-        if($config->read('process/applications/enabled', false))
+        $logicalGroups = array();
+
+        foreach($this->logicalGroups as $logicalGroup)
         {
-            $apps = [];
+            $values = [];
 
             foreach($this->servers as $server)
             {
-                $apps = array_merge($apps, $server->extractApplicationList());
+                $values = array_merge($values, $server->extractLogicalGroupValues($logicalGroup));
             }
 
-            $apps = array_unique($apps);
+            $values = array_unique($values);
+            sort($values);
 
-            return $apps;
+            $logicalGroups[$logicalGroup->getName()] = array(
+                'logicalGroup' => $logicalGroup,
+                'values' => $values,
+            );
         }
 
-        return false;
+        return $logicalGroups;
     }
 
     public function sidebarAction()
     {
         return $this->render('layout/sidebar.twig', [
             'currentServer' => $this->request->attributes->get('serverName', null),
-            'currentApplication' => $this->request->attributes->get('applicationName', null),
+            'currentLogicalGroupName' => $this->request->attributes->get('currentLogicalGroupName', null),
+            'currentLogicalGroupValue' => $this->request->attributes->get('currentLogicalGroupValue', null),
+
             'servers' => $this->servers,
-            'apps' => $this->retrieveApplications($this->configuration)
+            'logicalGroups' => $this->retrieveLogicalGroupsAndValues()
         ]);
     }
 }

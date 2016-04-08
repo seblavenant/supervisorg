@@ -13,7 +13,7 @@ class Provider implements ServiceProviderInterface
         $app['worker.processControl'] = $app->share(function($c) {
             $context = new WorkerContext(
                 function () use ($c) {
-                    return new ProcessControl($c['supervisor.servers']);
+                    return new ProcessControl($c['collection.servers']);
                 },
                 $c['amqp.consumers.simple'],
                 $c['configuration']->read('amqp/supervisorg/queues/processControl', 'process_control')

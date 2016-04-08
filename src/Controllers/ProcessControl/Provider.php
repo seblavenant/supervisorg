@@ -60,16 +60,18 @@ class Provider implements ControllerProviderInterface
             ->bind('process.server.stopAll');
 
         $controllers
-            ->match('/applications/{applicationName}/process/startAll', 'controller.processControl:applicationStartAllAction')
-            ->assert('applicationName', '[\w-_.]+')
+            ->match('/logical-groups/{logicalGroupName}/{logicalGroupValue}/process/startAll', 'controller.processControl:logicalGroupStartAllAction')
+            ->assert('logicalGroupName', '[\w-_.]+')
+            ->assert('logicalGroupValue', '[\w-_.]+')
             ->method('GET')
-            ->bind('process.application.startAll');
+            ->bind('process.logicalGroup.startAll');
 
         $controllers
-            ->match('/applications/{applicationName}/process/stopAll', 'controller.processControl:applicationStopAllAction')
-            ->assert('applicationName', '[\w-_.]+')
+            ->match('/logical-groups/{logicalGroupName}/{logicalGroupValue}/process/stopAll', 'controller.processControl:logicalGroupStopAllAction')
+            ->assert('logicalGroupName', '[\w-_.]+')
+            ->assert('logicalGroupValue', '[\w-_.]+')
             ->method('GET')
-            ->bind('process.application.stopAll');
+            ->bind('process.logicalGroup.stopAll');
 
         return $controllers;
     }

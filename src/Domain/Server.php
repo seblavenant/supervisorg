@@ -56,15 +56,18 @@ class Server
         return new ProcessCollection($processes);
     }
 
-    public function extractApplicationList()
+    public function extractLogicalGroupValues(LogicalGroup $logicalGroup)
     {
-        $apps = [];
+        $values = [];
 
         foreach($this->getProcessList() as $process)
         {
-            $apps[] = $process->getApplication();
+            if($logicalGroup->belongToAny($process))
+            {
+                $values[] = $logicalGroup->getValue($process);
+            }
         }
 
-        return array_unique($apps);
+        return array_unique($values);
     }
 }

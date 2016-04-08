@@ -1,0 +1,10 @@
+{% extends 'layout/content.twig' %}
+
+{% block mainTitle %}{{ currentLogicalGroupName }} / {{ currentLogicalGroupValue }}{% endblock %}
+
+{% block controlPanel %}
+    {{ macros.controlPanel(
+        path('process.logicalGroup.startAll', {'logicalGroupName': currentLogicalGroupName, 'logicalGroupValue': currentLogicalGroupValue}),
+        path('process.logicalGroup.stopAll', {'logicalGroupName': currentLogicalGroupName, 'logicalGroupValue': currentLogicalGroupValue})
+    ) }}
+{% endblock %}

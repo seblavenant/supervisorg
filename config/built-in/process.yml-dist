@@ -1,3 +1,8 @@
-applications:
-  enabled: <%process.applications.enabled%>
-  regex: <%process.applications.regex%>
+logicalGroups:
+    applications:
+        defaultView: true
+        icon: desktop
+        regex: "(?P<groupValue>.+)--(?P<process>.+)"
+    animals:
+        icon: object-ungroup
+        regex: "(.+)--(?P<groupValue>.+)-(?P<process>.+)"
