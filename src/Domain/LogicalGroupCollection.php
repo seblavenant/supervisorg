@@ -37,6 +37,24 @@ class LogicalGroupCollection implements \IteratorAggregate, Collection
         throw new \RuntimeException("Logical group $logicalGroupName not found");
     }
 
+    /**
+     * @return LogicalGroup
+     */
+    public function getDefault()
+    {
+        $default = null;
+
+        foreach($this->logicalGroups as $logicalGroup)
+        {
+            if($logicalGroup->isDefault())
+            {
+                return $logicalGroup;
+            }
+        }
+
+        return $default;
+    }
+
     public function count()
     {
         return iterator_count($this);

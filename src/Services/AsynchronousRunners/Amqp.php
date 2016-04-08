@@ -82,7 +82,7 @@ class Amqp implements AsynchronousRunner
         {
             if($process instanceof Process)
             {
-                $names[] = $process->getFullName();
+                $names[] = $process->getName();
             }
         }
 

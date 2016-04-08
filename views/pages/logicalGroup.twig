@@ -1,10 +1,10 @@
 {% extends 'layout/content.twig' %}
 
-{% block mainTitle %}{{ currentLogicalGroupName }} / {{ currentLogicalGroupValue }}{% endblock %}
+{% block mainTitle %}{{ currentLogicalGroup.name }} / {{ currentLogicalGroupValue }}{% endblock %}
 
 {% block controlPanel %}
     {{ macros.controlPanel(
-        path('process.logicalGroup.startAll', {'logicalGroupName': currentLogicalGroupName, 'logicalGroupValue': currentLogicalGroupValue}),
-        path('process.logicalGroup.stopAll', {'logicalGroupName': currentLogicalGroupName, 'logicalGroupValue': currentLogicalGroupValue})
+        path('process.logicalGroup.startAll', {'logicalGroupName': currentLogicalGroup.name, 'logicalGroupValue': currentLogicalGroupValue}),
+        path('process.logicalGroup.stopAll', {'logicalGroupName': currentLogicalGroup.name, 'logicalGroupValue': currentLogicalGroupValue})
     ) }}
 {% endblock %}

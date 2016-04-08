@@ -23,8 +23,7 @@ class Provider implements ServiceProviderInterface
                 $server = new Server(
                     $hostname,
                     $c['supervisor.client.factory']($host),
-                    $this->buildServerFilters($serverConfiguration, $c),
-                    $c['configuration']
+                    $this->buildServerFilters($serverConfiguration, $c)
                 );
 
                 $collection->add($server);

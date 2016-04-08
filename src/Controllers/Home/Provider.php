@@ -11,7 +11,8 @@ class Provider implements ControllerProviderInterface
     {
         $app['controller.home'] = function() use($app) {
             $controller = new Controller(
-                $app['supervisor.processes']
+                $app['supervisor.processes'],
+                $app['collection.logicalGroups']
             );
 
             $controller->setTwig($app['twig']);

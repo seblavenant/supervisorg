@@ -7,6 +7,7 @@ class LogicalGroup
     private
         $name,
         $icon,
+        $default,
         $regex;
 
     public function __construct($name, array $definition)
@@ -17,6 +18,7 @@ class LogicalGroup
 
         $this->regex = sprintf('~%s~', $definition['regex']);
         $this->icon = $definition['icon'];
+        $this->default = $definition['defaultView'] === true;
     }
 
     private function ensureDefinitionIsValid(array $definition)
@@ -54,6 +56,11 @@ class LogicalGroup
         return $this->icon;
     }
 
+    public function isDefault()
+    {
+        return $this->default;
+    }
+
     public function belongTo(Process $process, $value)
     {
         if($this->belongToAny($process))
@@ -71,13 +78,29 @@ class LogicalGroup
 
     public function getValue(Process $process)
     {
-        $value = null;
-
         if(preg_match($this->regex, $process->getName(), $matches))
         {
             if(isset($matches['groupValue']))
             {
-                $value = $matches['groupValue'];
+                return $matches['groupValue'];
+            }
+        }
+
+        throw new \InvalidArgumentException(sprintf(
+            'Invalid regex for logical group %s : missing "groupValue" capturing group',
+            $this->name
+        ));
+    }
+
+    public function getProcessName(Process $process)
+    {
+        $value = $process->getName();
+
+        if(preg_match($this->regex, $value, $matches))
+        {
+            if(isset($matches['process']))
+            {
+                $value = $matches['process'];
             }
         }
 
