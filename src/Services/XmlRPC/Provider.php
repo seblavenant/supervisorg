@@ -12,7 +12,7 @@ class Provider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
-        $app['supervisor.servers'] = $app->share(function($c) {
+        $app['collection.servers'] = $app->share(function($c) {
             $collection = new ServerCollection();
 
             foreach($c['configuration']->readRequired('supervisor/servers', []) as $serverConfiguration)
@@ -23,8 +23,7 @@ class Provider implements ServiceProviderInterface
                 $server = new Server(
                     $hostname,
                     $c['supervisor.client.factory']($host),
-                    $this->buildServerFilters($serverConfiguration, $c),
-                    $c['configuration']
+                    $this->buildServerFilters($serverConfiguration, $c)
                 );
 
                 $collection->add($server);

@@ -33,10 +33,15 @@ a:hover, a:focus
     text-decoration: none;
 }
 
-span.processServer,
-span.processApplication
+.processServer,
+.processLogicalGroup
 {
     color: #cacaca;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
     i.fa {
         margin-right: 5px;
     }
@@ -57,10 +62,12 @@ div.small-box.condensedView
     p.processDescription,
     span.small-box-footer {
         height: 0px;
+        margin: 0px;
+        padding: 0px;
         visibility: hidden;
         
         div.controlButton {
-            top: -40px;
+            top: -32px;
             visibility: visible;
         }
     }

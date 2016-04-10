@@ -4,22 +4,19 @@ namespace Supervisorg\Domain;
 
 use Supervisorg\Services\Processes\Filter;
 use Supervisorg\Services\XmlRPC\Client;
-use Puzzle\Configuration;
 
 class Server
 {
     private
         $name,
         $filter,
-        $client,
-        $config;
+        $client;
 
-    public function __construct($name, Client $client, Filter $filter, Configuration $config)
+    public function __construct($name, Client $client, Filter $filter)
     {
         $this->name = (string) $name;
         $this->filter = $filter;
         $this->client = $client;
-        $this->config = $config;
     }
 
     public function getName()
@@ -48,7 +45,7 @@ class Server
         foreach($processList as $processInfo)
         {
             $processInfo['server'] = $this;
-            $processes[] = new Process($processInfo, $this->config);
+            $processes[] = new Process($processInfo);
         }
 
         $processes = $this->filter->filter($processes);
@@ -56,15 +53,18 @@ class Server
         return new ProcessCollection($processes);
     }
 
-    public function extractApplicationList()
+    public function extractLogicalGroupValues(LogicalGroup $logicalGroup)
     {
-        $apps = [];
+        $values = [];
 
         foreach($this->getProcessList() as $process)
         {
-            $apps[] = $process->getApplication();
+            if($logicalGroup->belongToAny($process))
+            {
+                $values[] = $logicalGroup->getValue($process);
+            }
         }
 
-        return array_unique($apps);
+        return array_unique($values);
     }
 }

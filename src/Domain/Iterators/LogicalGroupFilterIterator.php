@@ -5,17 +5,20 @@ namespace Supervisorg\Domain\Iterators;
 use Supervisorg\Domain\Process;
 use Supervisorg\Domain\ProcessCollection;
 use Supervisorg\Domain\Collection;
+use Supervisorg\Domain\LogicalGroup;
 
-class ApplicationFilterIterator extends \FilterIterator implements Collection
+class LogicalGroupFilterIterator extends \FilterIterator implements Collection
 {
     private
-        $application;
+        $logicalGroup,
+        $logicalGroupValue;
 
-    public function __construct(ProcessCollection $collection, $application)
+    public function __construct(ProcessCollection $collection, LogicalGroup $logicalGroup, $logicalGroupValue)
     {
         parent::__construct(new \IteratorIterator($collection));
 
-        $this->application = $application;
+        $this->logicalGroup = $logicalGroup;
+        $this->logicalGroupValue = $logicalGroupValue;
     }
 
     public function accept()
@@ -24,7 +27,7 @@ class ApplicationFilterIterator extends \FilterIterator implements Collection
 
         if($process instanceof Process)
         {
-            if($process->getApplication() === $this->application)
+            if($this->logicalGroup->belongTo($process, $this->logicalGroupValue))
             {
                 return true;
             }
