@@ -47,4 +47,13 @@ class Controller
             'currentLogicalGroupValue' => $logicalGroupValue,
         ]);
     }
+
+    public function userGroupsAction($userGroupName)
+    {
+        return $this->render('pages/userGroup.twig', [
+            'processes' => $this->processCollectionProvider->findByUserGroup($userGroupName),
+            'currentUserGroup' => $userGroupName,
+            'currentLogicalGroup' => $this->logicalGroups->getDefault(),
+        ]);
+    }
 }

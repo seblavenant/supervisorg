@@ -19,7 +19,8 @@ class Provider implements ServiceProviderInterface
             return new ProcessCollectionProvider(
                 $c['collection.servers'],
                 $c['collection.logicalGroups'],
-                $c['asynchronous.runner']
+                $c['asynchronous.runner'],
+                $c['mongodb']
             );
         });
 

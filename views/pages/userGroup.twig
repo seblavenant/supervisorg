@@ -1,0 +1,10 @@
+{% extends 'layout/content.twig' %}
+
+{% block mainTitle %}{{ currentUserGroup }}{% endblock %}
+
+{% block controlPanel %}
+    {{ macros.controlPanel(
+        path('process.userGroup.startAll', {'userGroupName': currentUserGroup}),
+        path('process.userGroup.stopAll', {'userGroupName': currentUserGroup})
+    ) }}
+{% endblock %}

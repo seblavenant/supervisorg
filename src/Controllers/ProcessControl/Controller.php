@@ -123,6 +123,30 @@ class Controller
         return $this->redirectToReferer();
     }
 
+    public function userGroupStartAllAction($userGroupName)
+    {
+        $this->processCollectionProvider->startAllByUserGroup($userGroupName);
+
+        $this->addInfoFlash(sprintf(
+            'Processes for user group %s are starting in background ...',
+            $userGroupName
+        ));
+
+        return $this->redirectToReferer();
+    }
+
+    public function userGroupStopAllAction($userGroupName)
+    {
+        $this->processCollectionProvider->stopAllByUserGroup($userGroupName);
+
+        $this->addInfoFlash(sprintf(
+            'Processes for user group %s are stopping in background ...',
+            $userGroupName
+        ));
+
+        return $this->redirectToReferer();
+    }
+
     private function redirectToReferer($defaultPath = 'home', array $defaultParameters = [])
     {
         $referer = null;

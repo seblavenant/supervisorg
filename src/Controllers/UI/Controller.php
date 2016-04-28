@@ -8,6 +8,7 @@ use Psr\Log\NullLogger;
 use Supervisorg\Domain\ServerCollection;
 use Spear\Silex\Provider\Traits\TwigAware;
 use Supervisorg\Domain\LogicalGroupCollection;
+use MongoDB;
 
 class Controller
 {
@@ -17,11 +18,13 @@ class Controller
         LoggerAwareTrait;
 
     private
+        $mongo,
         $servers,
         $logicalGroups;
 
-    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups)
+    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups, MongoDB\Database $mongo)
     {
+        $this->mongo = $mongo;
         $this->servers = $servers;
         $this->logicalGroups = $logicalGroups;
         $this->logger = new NullLogger();
@@ -56,11 +59,25 @@ class Controller
     {
         return $this->render('layout/sidebar.twig', [
             'currentServer' => $this->request->attributes->get('serverName', null),
-            'currentLogicalGroupName' => $this->request->attributes->get('currentLogicalGroupName', null),
-            'currentLogicalGroupValue' => $this->request->attributes->get('currentLogicalGroupValue', null),
+            'currentLogicalGroupName' => $this->request->attributes->get('logicalGroupName', null),
+            'currentLogicalGroupValue' => $this->request->attributes->get('logicalGroupValue', null),
+            'currentUserGroupName' => $this->request->attributes->get('userGroupName', null),
 
             'servers' => $this->servers,
-            'logicalGroups' => $this->retrieveLogicalGroupsAndValues()
+            'logicalGroups' => $this->retrieveLogicalGroupsAndValues(),
+            'userGroups' => $this->retrieveUserGroups(),
         ]);
+    }
+
+    private function retrieveUserGroups()
+    {
+        $collection = $this->mongo->selectCollection('userGroups');
+
+        if($collection->count() > 0)
+        {
+            return $collection->find();
+        }
+
+        return [];
     }
 }

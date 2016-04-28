@@ -18,6 +18,7 @@
         "fortawesome/font-awesome": "~4.3",
         "zendframework/zend-xmlrpc": "^2.5",
         "silex-spear/adminlte": "dev-master",
+        "mongodb/mongodb": "~1.0.2",
         "odolbeau/rabbit-mq-admin-toolkit": "~3.0"
     },
     "autoload" : {

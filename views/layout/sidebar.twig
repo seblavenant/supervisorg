@@ -30,17 +30,30 @@
 
     {% if logicalGroups is not empty %}
         {% for name, info in logicalGroups %}
+            {% set menuItems = [] %}
+            {% for value in info.values %}
+                {% set menuItems = menuItems|merge([{
+                    'route': 'logicalGroups',
+                    'parameters': {'logicalGroupName': name, 'logicalGroupValue': value},
+                    'text': value,
+                    'active': currentLogicalGroupName == name and currentLogicalGroupValue == value
+                }]) %}
+            {% endfor %}
+            {{ ui_menu.multi(name|capitalize, info.logicalGroup.icon, menuItems, currentLogicalGroupName == name and currentLogicalGroupValue is not empty) }}
+        {% endfor %}
+    {% endif %}
+
+    {% if userGroups is not empty %}
         {% set menuItems = [] %}
-        {% for value in info.values %}
+        {% for userGroup in userGroups %}
             {% set menuItems = menuItems|merge([{
-                'route': 'logicalGroups',
-                'parameters': {'logicalGroupName': name, 'logicalGroupValue': value},
-                'text': value,
-                'active': currentLogicalGroupName == name and currentLogicalGroupValue == value
+                'route': 'userGroups',
+                'parameters': {'userGroupName': userGroup.name},
+                'text': userGroup.label ~ ' (' ~ userGroup.processes.count ~')',
+                'active': currentUserGroupName == userGroup.name
             }]) %}
         {% endfor %}
-        {{ ui_menu.multi(name|capitalize, info.logicalGroup.icon, menuItems, currentLogicalGroupName is not empty) }}
-        {% endfor %}
+        {{ ui_menu.multi('User groups', 'folder-open', menuItems, currentUserGroupName is not empty) }}
     {% endif %}
 
   </ul>

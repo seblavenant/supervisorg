@@ -73,6 +73,18 @@ class Provider implements ControllerProviderInterface
             ->method('GET')
             ->bind('process.logicalGroup.stopAll');
 
+        $controllers
+            ->match('/user-groups/{userGroupName}/process/startAll', 'controller.processControl:userGroupStartAllAction')
+            ->assert('userGroupName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('process.userGroup.startAll');
+
+        $controllers
+            ->match('/user-groups/{userGroupName}/process/stopAll', 'controller.processControl:userGroupStopAllAction')
+            ->assert('userGroupName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('process.userGroup.stopAll');
+
         return $controllers;
     }
 }

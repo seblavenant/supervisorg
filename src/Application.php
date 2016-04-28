@@ -20,6 +20,7 @@ class Application extends AbstractApplication
         $this->register(new Provider\Twig());
         $this->register(new HttpFragmentServiceProvider());
         $this->register(new Provider\AsseticServiceProvider());
+        $this->register(new Persistence\Provider());
         $this->register(new Services\Provider());
         $this->register(new Workers\Provider());
         $this->register(new \Spear\AdminLTE\Provider());

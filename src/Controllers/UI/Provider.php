@@ -12,7 +12,8 @@ class Provider implements ControllerProviderInterface
         $app['controller.ui'] = function() use($app) {
             $controller = new Controller(
                 $app['collection.servers'],
-                $app['collection.logicalGroups']
+                $app['collection.logicalGroups'],
+                $app['mongodb']
             );
 
             $controller->setTwig($app['twig']);

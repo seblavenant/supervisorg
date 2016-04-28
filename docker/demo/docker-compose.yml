@@ -33,6 +33,7 @@ services:
             - server-2
             - server-3
             - rabbitmq
+            - mongodb
         environment:
             - USER_ID=${USER_ID}
             - GROUP_ID=${GROUP_ID}
@@ -43,6 +44,10 @@ services:
         hostname: rabbitmq
         ports:
           - "${RMQ_PORT}:15672"
+        
+    mongodb:
+        image: mongo:3
+        container_name: supervisorg-mongodb
 
     server-1:
         build: ./images/supervisord

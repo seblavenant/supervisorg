@@ -40,6 +40,12 @@ class Provider implements ControllerProviderInterface
             ->method('GET')
             ->bind('logicalGroups');
 
+        $controllers
+            ->match('/user-groups/{userGroupName}', 'controller.home:userGroupsAction')
+            ->assert('userGroupName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('userGroups');
+
         return $controllers;
     }
 }

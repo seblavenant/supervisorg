@@ -7,19 +7,23 @@ use Supervisorg\Domain\ProcessCollection;
 use Supervisorg\Domain\Collection;
 use Supervisorg\Domain\Iterators\LogicalGroupFilterIterator;
 use Supervisorg\Domain\LogicalGroupCollection;
+use MongoDB\Database;
+use Supervisorg\Domain\Iterators\NameFilterIterator;
 
 class ProcessCollectionProvider
 {
     private
         $servers,
         $logicalGroups,
+        $mongo,
         $runner;
 
-    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups, AsynchronousRunner $runner)
+    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups, AsynchronousRunner $runner, Database $mongo)
     {
         $this->servers = $servers;
         $this->logicalGroups = $logicalGroups;
         $this->runner = $runner;
+        $this->mongo = $mongo;
     }
 
     /**
@@ -56,6 +60,24 @@ class ProcessCollectionProvider
             $this->findAll(),
             $this->logicalGroups->getByName($logicalGroupName),
             $logicalGroupValue
+        );
+    }
+
+    /**
+     * @return Collection
+     */
+    public function findByUserGroup($userGroupName)
+    {
+        $collection = $this->mongo->selectCollection('userGroups');
+
+        $group = $collection->findOne(
+            ['name' => $userGroupName],
+            ['typeMap' => ['array' => 'array']]
+        );
+
+        return new NameFilterIterator(
+            $this->findAll(),
+            $group->processes
         );
     }
 
@@ -132,6 +154,20 @@ class ProcessCollectionProvider
     {
         return $this->stopAllOntoDifferentServers(
             $this->findByLogicalGroup($logicalGroupName, $logicalGroupValue)
+        );
+    }
+
+    public function startAllByUserGroup($userGroupName)
+    {
+        return $this->startAllOntoDifferentServers(
+            $this->findByUserGroup($userGroupName)
+        );
+    }
+
+    public function stopAllByUserGroup($userGroupName)
+    {
+        return $this->stopAllOntoDifferentServers(
+            $this->findByUserGroup($userGroupName)
         );
     }
 
