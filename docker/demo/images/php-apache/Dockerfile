@@ -9,6 +9,7 @@ RUN apt-get -y update && \
     a2enmod rewrite 
 
 RUN ln -s /etc/php5/mods-available/amqp.ini /etc/php5/apache2/conf.d/20-amqp.ini && \
+    ln -s /etc/php5/mods-available/mongodb.ini /etc/php5/apache2/conf.d/20-mongodb.ini && \
     rm -rf /var/lib/apt/lists/* && \
     rm -f /etc/apache2/sites-enabled/* && \
     rm -rf /var/lock/apache2/

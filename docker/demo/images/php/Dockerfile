@@ -29,9 +29,9 @@ RUN wget --no-check-certificate https://github.com/alanxz/rabbitmq-c/releases/do
     pecl install amqp && \
     echo 'extension=amqp.so' >> /etc/php5/mods-available/amqp.ini && \
     ln -s /etc/php5/mods-available/amqp.ini /etc/php5/cli/conf.d/20-amqp.ini
-    
-RUN pecl install mongodb && \
-    echo "extension=mongodb.so" >> /etc/php5/mods-available/mongodb.ini && \
-    ln -s /etc/php5/mods-available/mongodb.ini /etc/php5/apache2/conf.d/20-mongodb.ini
 
+RUN pecl install mongodb && \
+    echo 'extension=mongodb.so' >> /etc/php5/mods-available/mongodb.ini && \
+    ln -s /etc/php5/mods-available/mongodb.ini /etc/php5/cli/conf.d/20-mongodb.ini
+    
 RUN rm -rf /var/lib/apt/lists/*
