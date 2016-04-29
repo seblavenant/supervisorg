@@ -13,6 +13,8 @@
     </div>
 </form>
  <ul class="sidebar-menu">
+    <li class="header">Configure</li>
+    {{  ui_menu.item('User groups', 'pencil', {'route' : 'configure_userGroups'}, {} , false) }}
     <li class="header">Browse</li>
 
     {% set serverMenuItems = [] %}
@@ -49,7 +51,7 @@
             {% set menuItems = menuItems|merge([{
                 'route': 'userGroups',
                 'parameters': {'userGroupName': userGroup.name},
-                'text': userGroup.label ~ ' (' ~ userGroup.processes.count ~')',
+                'text': userGroup.label,
                 'active': currentUserGroupName == userGroup.name
             }]) %}
         {% endfor %}

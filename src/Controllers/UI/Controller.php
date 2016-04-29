@@ -8,7 +8,7 @@ use Psr\Log\NullLogger;
 use Supervisorg\Domain\ServerCollection;
 use Spear\Silex\Provider\Traits\TwigAware;
 use Supervisorg\Domain\LogicalGroupCollection;
-use MongoDB;
+use Supervisorg\Persistence\UserGroupRepository;
 
 class Controller
 {
@@ -18,13 +18,13 @@ class Controller
         LoggerAwareTrait;
 
     private
-        $mongo,
+        $userGroupRepository,
         $servers,
         $logicalGroups;
 
-    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups, MongoDB\Database $mongo)
+    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups, UserGroupRepository $userGroupRepository)
     {
-        $this->mongo = $mongo;
+        $this->userGroupRepository = $userGroupRepository;
         $this->servers = $servers;
         $this->logicalGroups = $logicalGroups;
         $this->logger = new NullLogger();
@@ -65,19 +65,8 @@ class Controller
 
             'servers' => $this->servers,
             'logicalGroups' => $this->retrieveLogicalGroupsAndValues(),
-            'userGroups' => $this->retrieveUserGroups(),
+            'userGroups' => $this->userGroupRepository->findAll()
         ]);
     }
 
-    private function retrieveUserGroups()
-    {
-        $collection = $this->mongo->selectCollection('userGroups');
-
-        if($collection->count() > 0)
-        {
-            return $collection->find();
-        }
-
-        return [];
-    }
 }

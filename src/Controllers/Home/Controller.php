@@ -6,6 +6,7 @@ use Spear\Silex\Application\Traits;
 use Supervisorg\Services\ProcessCollectionProvider;
 use Spear\Silex\Provider\Traits\TwigAware;
 use Supervisorg\Domain\LogicalGroupCollection;
+use Supervisorg\Persistence\UserGroupRepository;
 
 class Controller
 {
@@ -13,13 +14,15 @@ class Controller
         TwigAware;
 
     private
+        $processCollectionProvider,
         $logicalGroups,
-        $processCollectionProvider;
+        $userGroupRepository;
 
-    public function __construct(ProcessCollectionProvider $processCollectionProvider, LogicalGroupCollection $logicalGroups)
+    public function __construct(ProcessCollectionProvider $processCollectionProvider, LogicalGroupCollection $logicalGroups, UserGroupRepository $userGroupRepository)
     {
         $this->processCollectionProvider = $processCollectionProvider;
         $this->logicalGroups = $logicalGroups;
+        $this->userGroupRepository = $userGroupRepository;
     }
 
     public function homeAction()
@@ -52,7 +55,7 @@ class Controller
     {
         return $this->render('pages/userGroup.twig', [
             'processes' => $this->processCollectionProvider->findByUserGroup($userGroupName),
-            'currentUserGroup' => $userGroupName,
+            'currentUserGroup' => $this->userGroupRepository->findOne($userGroupName),
             'currentLogicalGroup' => $this->logicalGroups->getDefault(),
         ]);
     }

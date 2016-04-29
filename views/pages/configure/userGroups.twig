@@ -1,0 +1,35 @@
+{% extends 'layout/content.twig' %}
+
+{% block pageTitle %}Configure user groups{% endblock %}
+
+{% block body %}
+    {% include 'common/alerts.twig' %}
+
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <a class="btn btn-lg btn-primary" href="">
+                        <i class="fa fa-plus"></i>&nbsp; Create
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+    {% for group in userGroups %}
+        <div class="col-md-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua">
+                    <i class="fa fa-gear"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-number">{{ group.label }}</span>
+                    <span class="info-box-text">{{ group.processNames|length }} processes registered</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -1,10 +1,10 @@
 {% extends 'layout/content.twig' %}
 
-{% block mainTitle %}{{ currentUserGroup }}{% endblock %}
+{% block mainTitle %}{{ currentUserGroup.label }}{% endblock %}
 
 {% block controlPanel %}
     {{ macros.controlPanel(
-        path('process.userGroup.startAll', {'userGroupName': currentUserGroup}),
-        path('process.userGroup.stopAll', {'userGroupName': currentUserGroup})
+        path('process.userGroup.startAll', {'userGroupName': currentUserGroup.name}),
+        path('process.userGroup.stopAll', {'userGroupName': currentUserGroup.name})
     ) }}
 {% endblock %}

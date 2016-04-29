@@ -44,5 +44,6 @@ class Application extends AbstractApplication
         $this->mount('/', new Controllers\Home\Provider());
         $this->mount('/', new Controllers\ProcessControl\Provider());
         $this->mount('/ui', new Controllers\UI\Provider());
+        $this->mount('/configure/user-groups', new Controllers\UserGroups\Provider());
     }
 }

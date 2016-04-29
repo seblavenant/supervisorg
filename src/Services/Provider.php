@@ -20,7 +20,7 @@ class Provider implements ServiceProviderInterface
                 $c['collection.servers'],
                 $c['collection.logicalGroups'],
                 $c['asynchronous.runner'],
-                $c['mongodb']
+                $c['repository.userGroups']
             );
         });
 

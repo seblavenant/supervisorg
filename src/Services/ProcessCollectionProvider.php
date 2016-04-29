@@ -7,23 +7,24 @@ use Supervisorg\Domain\ProcessCollection;
 use Supervisorg\Domain\Collection;
 use Supervisorg\Domain\Iterators\LogicalGroupFilterIterator;
 use Supervisorg\Domain\LogicalGroupCollection;
-use MongoDB\Database;
 use Supervisorg\Domain\Iterators\NameFilterIterator;
+use Supervisorg\Persistence\UserGroupRepository;
+use Supervisorg\Domain\UserGroup;
 
 class ProcessCollectionProvider
 {
     private
         $servers,
         $logicalGroups,
-        $mongo,
+        $userGroupRepository,
         $runner;
 
-    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups, AsynchronousRunner $runner, Database $mongo)
+    public function __construct(ServerCollection $servers, LogicalGroupCollection $logicalGroups, AsynchronousRunner $runner, UserGroupRepository $userGroupRepository)
     {
         $this->servers = $servers;
         $this->logicalGroups = $logicalGroups;
         $this->runner = $runner;
-        $this->mongo = $mongo;
+        $this->userGroupRepository = $userGroupRepository;
     }
 
     /**
@@ -68,17 +69,15 @@ class ProcessCollectionProvider
      */
     public function findByUserGroup($userGroupName)
     {
-        $collection = $this->mongo->selectCollection('userGroups');
+        $processNames = [];
 
-        $group = $collection->findOne(
-            ['name' => $userGroupName],
-            ['typeMap' => ['array' => 'array']]
-        );
+        $group = $this->userGroupRepository->findOne($userGroupName);
+        if($group instanceof UserGroup)
+        {
+            $processNames = $group->getProcessNames();
+        }
 
-        return new NameFilterIterator(
-            $this->findAll(),
-            $group->processes
-        );
+        return new NameFilterIterator($this->findAll(), $processNames);
     }
 
     public function startProcess($serverName, $processName)

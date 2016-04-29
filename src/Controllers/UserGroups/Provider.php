@@ -1,6 +1,6 @@
 <?php
 
-namespace Supervisorg\Controllers\UI;
+namespace Supervisorg\Controllers\UserGroups;
 
 use Silex\ControllerProviderInterface;
 use Silex\Application;
@@ -9,10 +9,9 @@ class Provider implements ControllerProviderInterface
 {
     public function connect(Application $app)
     {
-        $app['controller.ui'] = function() use($app) {
+        $app['controller.userGroups'] = function() use($app) {
             $controller = new Controller(
                 $app['collection.servers'],
-                $app['collection.logicalGroups'],
                 $app['repository.userGroups']
             );
 
@@ -25,9 +24,9 @@ class Provider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers
-            ->match('/sidebar', 'controller.ui:sidebarAction')
+            ->match('/', 'controller.userGroups:homeAction')
             ->method('GET')
-            ->bind('sidebar');
+            ->bind('configure_userGroups');
 
         return $controllers;
     }
