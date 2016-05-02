@@ -8,6 +8,9 @@ use Supervisorg\Persistence\UserGroupRepository;
 
 class UserGroup implements UserGroupRepository
 {
+    const
+        COLLECTION_NAME = 'userGroups';
+    
     private
         $mongo;
 
@@ -51,7 +54,7 @@ class UserGroup implements UserGroupRepository
 
     private function fetchAll()
     {
-        $collection = $this->mongo->selectCollection('userGroups');
+        $collection = $this->mongo->selectCollection(self::COLLECTION_NAME);
 
         if($collection->count() > 0)
         {
@@ -63,11 +66,22 @@ class UserGroup implements UserGroupRepository
 
     private function fetchOne($userGroupName)
     {
-        $collection = $this->mongo->selectCollection('userGroups');
+        $collection = $this->mongo->selectCollection(self::COLLECTION_NAME);
 
         return $collection->findOne(
             ['name' => $userGroupName],
             ['typeMap' => ['array' => 'array']]
         );
+    }
+    
+    public function delete($userGroupName)
+    {
+        $collection = $this->mongo->selectCollection(self::COLLECTION_NAME);
+        
+        $deleteResult = $collection->deleteOne([
+            'name' => $userGroupName,
+        ]);
+        
+        return $deleteResult->getDeletedCount() > 0;
     }
 }

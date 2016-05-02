@@ -17,6 +17,8 @@ class Provider implements ControllerProviderInterface
 
             $controller->setTwig($app['twig']);
             $controller->setRequest($app['request']);
+            $controller->setUrlGenerator($app['url_generator']);
+            $controller->setSession($app['session']);
 
             return $controller;
         };
@@ -27,6 +29,18 @@ class Provider implements ControllerProviderInterface
             ->match('/', 'controller.userGroups:homeAction')
             ->method('GET')
             ->bind('configure_userGroups');
+
+        $controllers
+            ->match('/edit/{userGroupName}', 'controller.userGroups:editAction')
+            ->assert('userGroupName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('userGroups_edit');
+
+        $controllers
+            ->match('/delete/{userGroupName}', 'controller.userGroups:deleteAction')
+            ->assert('userGroupName', '[\w-_.]+')
+            ->method('GET')
+            ->bind('userGroups_delete');
 
         return $controllers;
     }

@@ -24,9 +24,16 @@
                 <span class="info-box-icon bg-aqua">
                     <i class="fa fa-gear"></i>
                 </span>
-                <div class="info-box-content">
-                    <span class="info-box-number">{{ group.label }}</span>
-                    <span class="info-box-text">{{ group.processNames|length }} processes registered</span>
+                <div class="info-box-content userGroup">
+                    <span class="info-box-number">{{ group.label }} ({{ group.processNames|length }})</span>
+                    <div class="pull-right">
+                        <a class="btn btn-xs btn-success" href="{{ path('userGroups_edit', {'userGroupName': group.name}) }}">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                        <a class="btn btn-xs btn-danger" href="{{ path('userGroups_delete', {'userGroupName': group.name}) }}" onClick="return confirm('Are you sure to remove this group : {{ group.label }} ?');" aria-label="Delete" >
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

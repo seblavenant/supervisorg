@@ -15,4 +15,9 @@ interface UserGroupRepository
      * @return Domain\UserGroup|null
      */
     public function findOne($userGroupName);
+    
+    /**
+     * @return boolean
+     */
+    public function delete($userGroupName);
 }
