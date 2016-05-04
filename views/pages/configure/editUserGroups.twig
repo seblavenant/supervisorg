@@ -1,7 +1,50 @@
 {% extends 'layout/content.twig' %}
 
-{% block pageTitle %}Edit user group <strong>{{ userGroup.label}}</strong>{% endblock %}
+{% block pageTitle %}
+    {% if userGroup is null %}
+        Create new group
+    {% else %}
+        Edit user group <strong>{{ userGroup.label}}</strong>
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     {% include 'common/alerts.twig' %}
+
+    <form action="{{ path('userGroups_save') }}" method="post">
+        <div class="box">
+            <div class="box-body">
+                <div class="form-group">
+                    <label>Label</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-tag"></i>
+                        </div>
+                        <input type="text" class="form-control" id="label" name="label" value="{% if userGroup is not null %}{{ userGroup.label }}{% endif %}">
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-check"></i>
+                    Save
+                </button>
+                <a class="btn btn-default" href="{{ path('configure_userGroups') }}">
+                    <i class="fa fa-times"></i>
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </form>
+
+<div class="row">
+    {% for process in processes %}
+        {% embed 'partials/process_tile.twig' with {'class': 'inactive'} %}
+            {% block description %}{% endblock %}
+            {% block icon %}{% endblock %}
+            {% block footerAndControl %}{% endblock %}
+        {% endembed %}
+    {% endfor %}
+</div>
+
 {% endblock %}

@@ -11,7 +11,8 @@ class Provider implements ControllerProviderInterface
     {
         $app['controller.userGroups'] = function() use($app) {
             $controller = new Controller(
-                $app['collection.servers'],
+                $app['supervisor.processes'],
+                $app['collection.logicalGroups'],
                 $app['repository.userGroups']
             );
 
@@ -26,15 +27,25 @@ class Provider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers
-            ->match('/', 'controller.userGroups:homeAction')
+            ->match('/', 'controller.userGroups:configureAction')
             ->method('GET')
             ->bind('configure_userGroups');
+
+        $controllers
+            ->match('/new', 'controller.userGroups:newAction')
+            ->method('GET')
+            ->bind('userGroups_new');
 
         $controllers
             ->match('/edit/{userGroupName}', 'controller.userGroups:editAction')
             ->assert('userGroupName', '[\w-_.]+')
             ->method('GET')
             ->bind('userGroups_edit');
+
+        $controllers
+            ->match('/save', 'controller.userGroups:saveAction')
+            ->method('POST')
+            ->bind('userGroups_save');
 
         $controllers
             ->match('/delete/{userGroupName}', 'controller.userGroups:deleteAction')

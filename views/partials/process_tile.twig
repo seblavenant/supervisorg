@@ -2,23 +2,25 @@
     data-process-name="{{ process.name }}"
     data-process-state-name="{{ process.statename }}">
 
-    {% set class = 'aqua' %}
-    {% set icon = 'question' %}
-    {% if process.statename in [ 'RUNNING'] %}
-        {% set class = 'green' %}
-        {% set icon = 'refresh' %}
-    {% elseif process.statename in [ 'STARTING' ] %}
-        {% set class = 'olive' %}
-        {% set icon = 'play' %}
-    {% elseif process.statename in [ 'BACKOFF', 'EXITED' ] %}
-        {% set class = 'yellow' %}
-        {% set icon = 'exclamation-triangle' %}
-    {% elseif process.statename in [ 'STOPPING', 'STOPPED'] %}
-        {% set class = 'light-blue' %}
-        {% set icon = 'stop-circle-o' %}
-    {% elseif process.statename in [ 'FATAL' ] %}
-        {% set class = 'red' %}
-        {% set icon = 'close' %}
+    {% if class is not defined %}
+        {% set class = 'aqua' %}
+        {% set icon = 'question' %}
+        {% if process.statename in [ 'RUNNING'] %}
+            {% set class = 'green' %}
+            {% set icon = 'refresh' %}
+        {% elseif process.statename in [ 'STARTING' ] %}
+            {% set class = 'olive' %}
+            {% set icon = 'play' %}
+        {% elseif process.statename in [ 'BACKOFF', 'EXITED' ] %}
+            {% set class = 'yellow' %}
+            {% set icon = 'exclamation-triangle' %}
+        {% elseif process.statename in [ 'STOPPING', 'STOPPED'] %}
+            {% set class = 'light-blue' %}
+            {% set icon = 'stop-circle-o' %}
+        {% elseif process.statename in [ 'FATAL' ] %}
+            {% set class = 'red' %}
+            {% set icon = 'close' %}
+        {% endif %}
     {% endif %}
 
 
@@ -45,14 +47,19 @@
 
           {% set name = belongToLogicalGroup ? currentLogicalGroup.getProcessName(process) : process.name %}
           <h4 class="processName" title="{{ name }}">{{ name }}</h4>
+          {% block description %}
           <p class="processDescription" title="{{ process.description|e('html') }}">{{ process.description }}</p>
+          {% endblock %}
 
         </div>
 
+        {% block icon %}
         <div class="icon">
           <i class="fa fa-{{ icon }}"></i>
         </div>
+        {% endblock %}
 
+        {% block footerAndControl %}
         <span href="#" class="small-box-footer clearfix">
             <div class="row">
               <div class="col-md-9">
@@ -71,5 +78,6 @@
               </div>
             </div>
         </span>
+        {% endblock %}
       </div>
 </div>
