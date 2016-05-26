@@ -34,7 +34,7 @@ class Name implements Filter
         return $processList;
     }
 
-    private function isFiltered(array $process)
+    private function isFiltered(Process $process)
     {
         if(in_array($process->getName(), $this->filteredProcessNames))
         {
