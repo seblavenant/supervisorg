@@ -5,7 +5,7 @@
 A dashboard for supervisord.
 
 
-**Warning** : the readme might not be up to date. To test supervisorg build all docke rimages in the `docker/demo/images` directory then run the followinf command
+**Warning** : the readme might not be up to date. To test supervisorg build all docker images in the `docker/demo/images` directory then run the following command
 
 ```
 USER_ID=$(id -u) GROUP_ID=$(id -g) WEB_PORT=80 RMQ_PORT=15672 docker-compose up -d
