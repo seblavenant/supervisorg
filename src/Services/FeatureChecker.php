@@ -16,6 +16,6 @@ class FeatureChecker
 
     public function isEnabled($name)
     {
-        return $this->configuration->readRequired("features/$name/enabled");
+        return $this->configuration->read("features/$name/enabled", true);
     }
 }
