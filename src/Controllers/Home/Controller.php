@@ -6,6 +6,8 @@ use Spear\Silex\Application\Traits;
 use Supervisorg\Services\ProcessCollectionProvider;
 use Spear\Silex\Provider\Traits\TwigAware;
 use Supervisorg\Domain\LogicalGroupCollection;
+use Supervisorg\Services\FeatureChecker;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Controller
 {
@@ -14,12 +16,14 @@ class Controller
 
     private
         $logicalGroups,
-        $processCollectionProvider;
+        $processCollectionProvider,
+        $featureChecker;
 
-    public function __construct(ProcessCollectionProvider $processCollectionProvider, LogicalGroupCollection $logicalGroups)
+    public function __construct(ProcessCollectionProvider $processCollectionProvider, LogicalGroupCollection $logicalGroups, FeatureChecker $featureChecker)
     {
         $this->processCollectionProvider = $processCollectionProvider;
         $this->logicalGroups = $logicalGroups;
+        $this->featureChecker = $featureChecker;
     }
 
     public function homeAction()
@@ -32,7 +36,12 @@ class Controller
 
     public function serversAction($serverName)
     {
-        return $this->render('pages/servers.twig', [
+        if( ! $this->featureChecker->isEnabled("listByServer"))
+        {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('pages\servers.twig', [
             'processes' => $this->processCollectionProvider->findByServerName($serverName),
             'currentServer' => $serverName,
             'currentLogicalGroup' => $this->logicalGroups->getDefault(),
@@ -41,7 +50,12 @@ class Controller
 
     public function logicalGroupsAction($logicalGroupName, $logicalGroupValue)
     {
-        return $this->render('pages/logicalGroup.twig', [
+        if( ! $this->featureChecker->isEnabled("logicalGroups"))
+        {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('pages\logicalGroup.twig', [
             'processes' => $this->processCollectionProvider->findByLogicalGroup($logicalGroupName, $logicalGroupValue),
             'currentLogicalGroup' => $this->logicalGroups->getByName($logicalGroupName),
             'currentLogicalGroupValue' => $logicalGroupValue,

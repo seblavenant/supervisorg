@@ -1,0 +1,5 @@
+listByServer:
+    enabled: true
+
+logicalGroups:
+    enabled: true

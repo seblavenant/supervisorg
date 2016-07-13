@@ -41,6 +41,10 @@ class Provider implements ServiceProviderInterface
 
             return $collection;
         });
+
+        $app['feature.checker'] = $app->share(function($c) {
+            return new FeatureChecker($c['configuration']);
+        });
     }
 
     public function boot(Application $app)

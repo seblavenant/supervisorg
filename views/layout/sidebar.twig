@@ -15,32 +15,36 @@
  <ul class="sidebar-menu">
     <li class="header">Browse</li>
 
-    {% set serverMenuItems = [] %}
-    {% for server in servers %}
+    {% if app["feature.checker"].isEnabled('listByServer') %}
+        {% set serverMenuItems = [] %}
+        {% for server in servers %}
 
-        {% set serverMenuItems = serverMenuItems|merge([{
-            'route': 'servers',
-            'parameters': {'serverName': server.name},
-            'text': server.name,
-            'active': currentServer == server.name
-        }]) %}
-    {% endfor %}
-
-    {{ ui_menu.multi('Servers', 'server', serverMenuItems, currentServer is not empty ) }}
-
-    {% if logicalGroups is not empty %}
-        {% for name, info in logicalGroups %}
-        {% set menuItems = [] %}
-        {% for value in info.values %}
-            {% set menuItems = menuItems|merge([{
-                'route': 'logicalGroups',
-                'parameters': {'logicalGroupName': name, 'logicalGroupValue': value},
-                'text': value,
-                'active': currentLogicalGroupName == name and currentLogicalGroupValue == value
+            {% set serverMenuItems = serverMenuItems|merge([{
+                'route': 'servers',
+                'parameters': {'serverName': server.name},
+                'text': server.name,
+                'active': currentServer == server.name
             }]) %}
         {% endfor %}
-        {{ ui_menu.multi(name|capitalize, info.logicalGroup.icon, menuItems, currentLogicalGroupName is not empty) }}
-        {% endfor %}
+
+        {{ ui_menu.multi('Servers', 'server', serverMenuItems, currentServer is not empty ) }}
+    {% endif %}
+
+    {% if app["feature.checker"].isEnabled('logicalGroups') %}
+        {% if logicalGroups is not empty %}
+            {% for name, info in logicalGroups %}
+            {% set menuItems = [] %}
+            {% for value in info.values %}
+                {% set menuItems = menuItems|merge([{
+                    'route': 'logicalGroups',
+                    'parameters': {'logicalGroupName': name, 'logicalGroupValue': value},
+                    'text': value,
+                    'active': currentLogicalGroupName == name and currentLogicalGroupValue == value
+                }]) %}
+            {% endfor %}
+            {{ ui_menu.multi(name|capitalize, info.logicalGroup.icon, menuItems, currentLogicalGroupName is not empty) }}
+            {% endfor %}
+        {% endif %}
     {% endif %}
 
   </ul>
